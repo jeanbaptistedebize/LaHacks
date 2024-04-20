@@ -1,5 +1,5 @@
 import { api } from "../api";
-import { AddPlantRequest, AddPlantResponce, GetUserResponse } from "./user.dto";
+import { AddPlantRequest, AddPlantResponce, GetAllPlant, GetUserResponse } from "./user.dto";
 
 export const userApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -17,7 +17,14 @@ export const userApi = api.injectEndpoints({
         method: "POST",
       }),
     }),
+    getAllPlant: build.query<GetAllPlant, void>({
+      query: () => ({
+        url: "/plant/all",
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserQuery, useAddPlantMutation } = userApi;
+export const { useGetUserQuery, useAddPlantMutation, useGetAllPlantQuery} = userApi;

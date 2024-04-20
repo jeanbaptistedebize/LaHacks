@@ -1,16 +1,27 @@
 import { Camera, CameraType } from "expo-camera";
 import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useLoginMutation } from "../../services/auth/auth";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+} from "react-native";
 import { useAddPlantMutation } from "../../services/user/user";
 import TopBar from "../../components/Topbar";
 
+//@ts-ignore
+import mapPinBig from "../../../assets/gifs/firework.gif";
+import BottomDrawerMenu from "../../components/plantDescription";
+
 export default function CameraPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [type, setType] = useState(CameraType.back);
-  const [plantName, setPlantName] = useState("loading");
+  const [plantName, setPlantName] = useState(null);
+  const [plantNameIsLoading, setPlantNameIsLoading] = useState(false);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [cameraRef, setCameraRef] = useState(null);
-  const [login, { isLoading }] = useLoginMutation();
   const [addPlant] = useAddPlantMutation();
 
   if (!permission) {
@@ -18,6 +29,9 @@ export default function CameraPage() {
     return <View />;
   }
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
@@ -39,18 +53,16 @@ export default function CameraPage() {
 
   const getPlant = async (imageb64: string) => {
     try {
-      // const t = await login({
-      //   email: "test@test.test",
-      //   password: "1234aaBB@",
-      // }).unwrap();
+      setPlantName(null);
+      setPlantNameIsLoading(true);
 
-      setPlantName("loading...");
       const t = await addPlant({
         type: "FLOWER",
         name: "ROSE",
         coord: [0, 0],
         image: imageb64,
       }).unwrap();
+      setPlantNameIsLoading(false);
       setPlantName(t.name);
     } catch (error) {
       console.error(error);
@@ -71,17 +83,46 @@ export default function CameraPage() {
         type={type}
         ref={(ref) => setCameraRef(ref)}
       >
-        <Text style={{ ...styles.text, alignSelf: "center", marginTop: 20 }}>
-          {plantName}
-        </Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignContent: "center",
+            justifyContent: "center",
+            marginTop: 200,
+          }}
+        >
+          <Text style={{ ...styles.text, alignSelf: "center", marginTop: 20 }}>
+            {plantNameIsLoading ? "Is loading..." : plantName}
+          </Text>
+          {plantName && (
+            <Image
+              source={mapPinBig}
+              style={{ width: 100, height: 100, alignSelf: "center" }}
+            />
+          )}
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={takePicture}>
+          <TouchableOpacity style={styles.button} onPress={toggleMenu}>
             <Text style={styles.text}>Take Picure</Text>
           </TouchableOpacity>
         </View>
+        {isMenuOpen && (
+          <BottomDrawerMenu
+            isOpen={isMenuOpen}
+            onClose={toggleMenu}
+            plant={{
+              name: "Flower Name",
+              image: "",
+              rarity: "common",
+              description:
+                "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
+            }}
+          />
+        )}
       </Camera>
       <TopBar />
     </View>

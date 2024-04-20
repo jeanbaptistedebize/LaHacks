@@ -2,8 +2,13 @@
 import EARTH from "../../../assets/globe.png";
 // @ts-ignore
 import PROFILE from "../../../assets/icons/profile.png";
+// @ts-ignore
+
 import NAVBAR from "../../../assets/nav.png";
+// @ts-ignore
+
 import CAMERA from "../../../assets/camera.png";
+// @ts-ignore
 import GARDEN from "../../../assets/garden.png";
 // @ts-ignore
 import TRESOR from "../../../assets/icons/tresor.png";
@@ -11,9 +16,11 @@ import { Box, HStack, View } from "native-base";
 import { Image, Text, ImageBackground } from "react-native";
 import { useNavigate } from "react-router-native";
 import CustomIconButton from "../CustomIconButton/CustomIconButton";
+import { useLoginMutation } from "../../services/auth/auth";
 
 function TopBar() {
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
 
   const navigateToPath = (path: string) => () => navigate(path);
 
