@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Camera, Marker } from "react-native-maps";
 import PropTypes from "prop-types";
 import { StyleSheet } from "react-native";
 
@@ -24,12 +24,30 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
     }
   }, [markers]);
 
+  useEffect(() => {
+    if (mapRef.current) {
+      const newCamera: Camera = {
+        center: {
+          latitude: 34.070467452049336,
+          longitude: -118.44688096398609,
+        },
+        heading: 90,
+        pitch: 50,
+        altitude: 500,
+      };
+
+      // @ts-ignore
+      mapRef.current.animateCamera(newCamera, { duration: 5000 });
+    }
+  }, []);
+
   return (
     <MapView
       style={styles.map}
       ref={mapRef}
       initialRegion={region}
       region={region}
+      // showsUserLocation
     >
       {markers.map((marker) => (
         <Marker

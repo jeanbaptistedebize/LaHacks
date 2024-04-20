@@ -1,26 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import * as Location from "expo-location";
 import MapMarkerAutoZoom from "./zoom";
 import TopBar from "../../components/Topbar";
 
 export default function Home() {
-  const [location, setLocation] = useState<Location.LocationObject>(null);
+  const [location, setLocation] = useState<Location.LocationObject>({
+    // @ts-ignore
+    coords: {
+      latitude: 34.070467452049336,
+      longitude: -118.44688096398609,
+    },
+  });
   const [errorMsg, setErrorMsg] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       setErrorMsg("Permission to access location was denied");
+  //       return;
+  //     }
 
-      let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
-      setLocation(location);
-    })();
-  }, []);
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     console.log(location);
+  //     setLocation(location);
+  //   })();
+  // }, []);
 
   let text = "Waiting..";
   if (errorMsg) {
@@ -29,7 +41,12 @@ export default function Home() {
     text = JSON.stringify(location);
   }
 
-  if (!location) return <></>;
+  if (!location)
+    return (
+      <View style={{ justifyContent: "center", height: "100%" }}>
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
 
   const userCoords = [
     {
