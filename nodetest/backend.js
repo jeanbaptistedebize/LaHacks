@@ -19,7 +19,17 @@ async function generateImage() {
     const imagePath = 'sunflower.jpg';
     const base64image = encodeImageToBase64(imagePath);
 
-    const prompt = "return only the scientific name of the species in the image, nothing else";
+    //const prompt = "You will return a json response of the common name and scientific name of the flower in the image.";
+
+    const prompt = `
+    You are given an image of a plant. Your response must be a JSON object containing 13 fields that are all strings. Here is what you need to return: 
+
+    commonname, scientificname, kingdom, subkingdom, superdivision, division, class, sublcass, order, family, genus, species, description. 
+
+    The description should be three sentences. Do not return null for any fields. If you are not sure, make a good guess. 
+
+    `
+
     const image = {
       inlineData: {
         data: base64image /* see JavaScript quickstart for details */,
