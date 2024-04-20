@@ -8,9 +8,11 @@ import { Box, HStack, View } from "native-base";
 import { Image } from "react-native";
 import { useNavigate } from "react-router-native";
 import CustomIconButton from "../CustomIconButton/CustomIconButton";
+import { useLoginMutation } from "../../services/auth/auth";
 
 function TopBar() {
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
 
   const navigateToPath = (path: string) => () => navigate(path);
 
@@ -19,14 +21,17 @@ function TopBar() {
       w="full"
       h={60}
       borderColor="#BDBDBD"
+      backgroundColor={"white"}
       borderWidth={1}
       px={2.5}
-      marginTop={2}
-      borderBottomRightRadius={16}
-      borderBottomLeftRadius={16}
+      borderTopRightRadius={16}
+      borderTopLeftRadius={16}
       borderTopWidth={0}
       alignItems="center"
       justifyContent="space-between"
+      position={"absolute"}
+      bottom={0}
+      width="100%"
     >
       <CustomIconButton onPress={navigateToPath("/")}>
         <Box height="30px" width="30px">
@@ -48,7 +53,14 @@ function TopBar() {
             height: 30,
           }}
         />
-        <CustomIconButton onPress={navigateToPath("/")}>
+        <CustomIconButton
+          onPress={() => {
+            login({
+              email: "test@test.test",
+              password: "1234aaBB@",
+            }).unwrap();
+          }}
+        >
           <Box height="35px" width="35px">
             <Image style={{ height: "100%", width: "100%" }} source={PROFILE} />
           </Box>

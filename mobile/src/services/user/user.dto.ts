@@ -26,3 +26,16 @@ export interface AddPlantRequest {
 export interface AddPlantResponce {
   name: string;
 }
+
+export class PlantModel {
+  id: string;
+  type: string;
+  name: string;
+  coord: number[];
+  image: string;
+  createdAt: Date;
+}
+
+export interface GetAllPlant {
+  plants: PlantModel[]
+}

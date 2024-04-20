@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import MapView, { Camera, Marker } from "react-native-maps";
 import PropTypes from "prop-types";
 import { StyleSheet } from "react-native";
+import { useGetAllPlantQuery } from "../../services/user/user";
+
+//@ts-ignore
+import mapPin from "../../../assets/icons/plantPin.png";
+//@ts-ignore
+import mapPinBig from "../../../assets/icons/plantPinBig.png";
 
 interface MapProps {
   markers: {
@@ -15,6 +21,7 @@ interface MapProps {
 const MapMarkerAutoZoom = ({ markers }: MapProps) => {
   const [region, setRegion] = useState();
   const mapRef = useRef();
+  const res = useGetAllPlantQuery();
 
   useEffect(() => {
     if (mapRef.current) {
@@ -37,9 +44,16 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
       };
 
       // @ts-ignore
-      mapRef.current.animateCamera(newCamera, { duration: 5000 });
+      mapRef.current.animateCamera(newCamera, { duration: 0 });
     }
   }, []);
+
+  const [zoomLevel, setZoomLevel] = useState(0);
+
+  const handleRegionChange = (newRegion) => {
+    const zoom = Math.log2(360 / newRegion.longitudeDelta);
+    setZoomLevel(zoom);
+  };
 
   return (
     <MapView
@@ -47,6 +61,7 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
       ref={mapRef}
       initialRegion={region}
       region={region}
+      onRegionChange={handleRegionChange}
       // showsUserLocation
     >
       {markers.map((marker) => (
@@ -60,6 +75,20 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
           title={marker.name}
         />
       ))}
+      {res.data &&
+        res.data.plants.map((plant) => (
+          <Marker
+            image={zoomLevel > 14.5 ? mapPin : mapPinBig}
+            key={plant.id}
+            identifier={plant.id}
+            coordinate={{
+              latitude: plant.coord[0],
+              longitude: plant.coord[1],
+            }}
+            centerOffset={{ x: 0, y: -10 }}
+            title={plant.name}
+          />
+        ))}
     </MapView>
   );
 };
