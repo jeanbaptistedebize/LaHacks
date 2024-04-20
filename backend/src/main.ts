@@ -4,6 +4,7 @@ import { writeFileSync } from 'fs';
 import { join } from 'path';
 import RedisCacheService from 'redis/redis.service';
 import { BACKEND_PORT, FRONTEND_PORT, FRONTEND_URL, MODE } from 'setup';
+import * as bodyParser from 'body-parser';
 
 import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
@@ -41,13 +42,13 @@ async function bootstrap() {
   Logger.debug('Redis Connected!');
 
   app.enableCors({
-    // origin: [`http://localhost:19006`], // For dev Mobile
-    origin: [`${FRONTEND_URL}:${FRONTEND_PORT}`],
+    origin: [`${FRONTEND_URL}:${FRONTEND_PORT}`, `*`],
     credentials: true,
     allowedHeaders: 'Content-Type',
     methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
   });
   app.use(json({ limit: '50mb' }));
+  app.use(bodyParser.json({limit: '50mb'}));
   app.use(cookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
