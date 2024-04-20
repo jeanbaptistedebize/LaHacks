@@ -13,8 +13,10 @@ import TopBar from "../../components/Topbar";
 
 //@ts-ignore
 import mapPinBig from "../../../assets/gifs/firework.gif";
+import BottomDrawerMenu from "../../components/plantDescription";
 
 export default function CameraPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [type, setType] = useState(CameraType.back);
   const [plantName, setPlantName] = useState(null);
   const [plantNameIsLoading, setPlantNameIsLoading] = useState(false);
@@ -27,6 +29,9 @@ export default function CameraPage() {
     return <View />;
   }
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
@@ -101,10 +106,23 @@ export default function CameraPage() {
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={takePicture}>
+          <TouchableOpacity style={styles.button} onPress={toggleMenu}>
             <Text style={styles.text}>Take Picure</Text>
           </TouchableOpacity>
         </View>
+        {isMenuOpen && (
+          <BottomDrawerMenu
+            isOpen={isMenuOpen}
+            onClose={toggleMenu}
+            plant={{
+              name: "Flower Name",
+              image: "",
+              rarity: "common",
+              description:
+                "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
+            }}
+          />
+        )}
       </Camera>
       <TopBar />
     </View>

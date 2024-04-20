@@ -6,6 +6,8 @@ import { LogBox } from "react-native";
 import CameraPage from "./src/pages/camera";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
+import { useFonts } from "expo-font";
+import { Itim_400Regular } from "@expo-google-fonts/itim";
 
 function App() {
   useEffect(() => {
@@ -13,6 +15,10 @@ function App() {
       "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
     ]);
   }, []);
+  let [fontsLoaded] = useFonts({
+    Itim_400Regular,
+  });
+
   return (
     <NativeBaseProvider>
       <NativeRouter>
