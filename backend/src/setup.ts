@@ -17,4 +17,6 @@ export const REDIS_PORT = get('REDIS_PORT').required().asPortNumber();
 export const REDIS_PASSWORD = get('REDIS_PASSWORD').required().asString();
 export const REDIS_USERNAME = get('REDIS_USERNAME').required().asString();
 
+export const API_KEY_GEM = get('API_KEY_GEM').required().asString();
+
 Logger.log(`Env variables Loaded`);

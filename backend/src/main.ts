@@ -9,6 +9,7 @@ import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
+import { json } from 'body-parser';
 
 function buildSwagger(
   app: INestApplication,
@@ -41,11 +42,12 @@ async function bootstrap() {
 
   app.enableCors({
     // origin: [`http://localhost:19006`], // For dev Mobile
-    origin: [`${FRONTEND_URL}:${FRONTEND_PORT}`,],
+    origin: [`${FRONTEND_URL}:${FRONTEND_PORT}`],
     credentials: true,
     allowedHeaders: 'Content-Type',
     methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
   });
+  app.use(json({ limit: '50mb' }));
   app.use(cookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
