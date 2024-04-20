@@ -34,7 +34,7 @@ function TopBar() {
         </Box>
       </CustomIconButton>
       <HStack justifyContent="space-between" alignItems="center">
-        <CustomIconButton onPress={navigateToPath("/")}>
+        <CustomIconButton onPress={navigateToPath("/camera")}>
           <Box height="35px" width="35px">
             <Image style={{ height: "100%", width: "100%" }} source={TRESOR} />
           </Box>

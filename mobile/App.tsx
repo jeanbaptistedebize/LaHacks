@@ -3,6 +3,9 @@ import { NativeRouter, Route, Routes } from "react-router-native";
 import Home from "./src/pages/home";
 import { useEffect } from "react";
 import { LogBox } from "react-native";
+import CameraPage from "./src/pages/camera";
+import { Provider } from "react-redux";
+import { store } from "./src/store";
 
 function App() {
   useEffect(() => {
@@ -13,9 +16,12 @@ function App() {
   return (
     <NativeBaseProvider>
       <NativeRouter>
-        <Routes>
-          <Route Component={Home} path="" />
-        </Routes>
+        <Provider store={store}>
+          <Routes>
+            <Route Component={Home} path="" />
+            <Route Component={CameraPage} path="camera" />
+          </Routes>
+        </Provider>
       </NativeRouter>
     </NativeBaseProvider>
   );
