@@ -66,7 +66,6 @@ export default function CameraPage() {
 
   return (
     <View style={styles.container}>
-      <TopBar />
       <Camera
         style={styles.camera}
         type={type}
@@ -84,6 +83,7 @@ export default function CameraPage() {
           </TouchableOpacity>
         </View>
       </Camera>
+      <TopBar />
     </View>
   );
 }

@@ -44,6 +44,7 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
   return (
     <MapView
       style={styles.map}
+      customMapStyle={mapStyle}
       ref={mapRef}
       initialRegion={region}
       region={region}
@@ -77,6 +78,27 @@ MapMarkerAutoZoom.propTypes = {
     })
   ),
 };
+
+const mapStyle=[
+  {
+    "featureType": "poi.business",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.business",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+]
 
 const styles = StyleSheet.create({
   map: {
