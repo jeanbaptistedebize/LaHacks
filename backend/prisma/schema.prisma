@@ -1,0 +1,37 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+enum PLANT_TYPES {
+  TREE
+  FLOWER
+  VEGETABLE
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgcrypto]
+}
+
+model User {
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstname String
+  lastname  String
+  email     String  @unique
+  password  String
+  Plant     Plant[]
+}
+
+model Plant {
+  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type      PLANT_TYPES
+  name      String
+  image     String
+  coord     Int[]
+  createdAt DateTime    @default(now())
+  userId    String      @db.Uuid
+
+  user User @relation(fields: [userId], references: [id])
+}
