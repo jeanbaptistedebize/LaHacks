@@ -42,7 +42,7 @@ function TopBar() {
           </Box>
         </CustomIconButton>
         <CustomIconButton onPress={navigateToPath("/camera")}>
-          <Box backgroundColor="#8DDC8B" borderWidth='1px' borderColor="black" borderRadius="100" marginTop="-25px" marginLeft="51px" height="60px" width="60px">
+          <Box backgroundColor="#8DDC8B" borderWidth='1px' borderColor="black" borderRadius="100" marginTop="-25px" marginLeft="42px" height="60px" width="60px">
             <ImageBackground resizeMode="contain" style={{ position: 'absolute', height: "100%", width: "100%" }} source={CAMERA}></ImageBackground>
             <Text style={{height: '100%', transform: 'translateY(65px)', fontWeight: 'bold', color: 'white', textAlign: 'center'}}>
               Scan
@@ -50,7 +50,7 @@ function TopBar() {
           </Box>
         </CustomIconButton>
         <CustomIconButton onPress={navigateToPath("/collection")}>
-          <Box borderRadius="100" marginLeft="30px" height="40px" width="40px">
+          <Box borderRadius="100" marginLeft="38px" height="40px" width="40px">
             <ImageBackground resizeMode="contain" style={{ position: 'absolute', height: "100%", width: "100%" }} source={GARDEN}></ImageBackground>
             <Text style={{height: '100%', marginLeft: -6, width: 51, transform: 'translateY(40px)', color: 'white', fontWeight: 'bold', textAlign: 'center'}}>
               Garden

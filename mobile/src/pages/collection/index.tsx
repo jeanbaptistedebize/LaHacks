@@ -1,13 +1,20 @@
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, ImageBackground } from 'react-native';
 import TopBar from "../../components/Topbar";
+import { ScrollView } from 'native-base';
+import GARDEN from '../../../assets/garden.png'
 
 const templatePlantList = [
-  {id: 1, type: "flower", name: "homhunculus munculus"},
-  {id: 2, type: "flower", name: "homhunculus munculus"},
-  {id: 3, type: "flower", name: "homhunculus munculus"},
-  {id: 4, type: "flower", name: "homhunculus munculus"},
-  {id: 5, type: "flower", name: "homhunculus munculus"},
-  {id: 6, type: "flower", name: "homhunculus munculus"}
+  {id: 1, type: "flower", name: "homhunculus munculus", image: 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?cs=srgb&dl=pexels-jonaskakaroto-736230.jpg&fm=jpg'},
+  {id: 2, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 3, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 4, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 5, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 6, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 7, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 8, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 9, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 10, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
+  {id: 11, type: "flower", name: "homhunculus munculus", image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhYfRwxLakUvGTspE2UDPI8pUviM3wi-2xV4EcL-ePrg&s'}
 ]
 
 export default function Collection() {
@@ -29,6 +36,7 @@ export default function Collection() {
         }}>
           Discovered Plants
         </Text>
+        <ScrollView>
         <View style={{
           borderTopRightRadius: 20,
           borderTopLeftRadius: 20,
@@ -50,13 +58,14 @@ export default function Collection() {
               borderRadius: 15,
               margin: 5,
             }}>
-              <Image source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
+              <ImageBackground borderRadius="25px" resizeMode='fit' style={{height: '100%', width: '100%'}} source={{
+                uri: item.image,
               }} />
               
             </View>)
           }
         </View>
+        </ScrollView>
       </View>
       <TopBar/>
     </View>
