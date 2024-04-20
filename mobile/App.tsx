@@ -4,6 +4,7 @@ import Home from "./src/pages/home";
 import { useEffect } from "react";
 import { LogBox } from "react-native";
 import CameraPage from "./src/pages/camera";
+import Collection from "./src/pages/collection";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
 import { useFonts } from "expo-font";
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route Component={Home} path="" />
             <Route Component={CameraPage} path="camera" />
+            <Route Component={Collection} path="collection" />
           </Routes>
         </Provider>
       </NativeRouter>
