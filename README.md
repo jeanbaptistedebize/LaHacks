@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://github.com/jeanbaptistedebize/LaHacks/blob/main/icon.png?raw=true" width="300"/>
+  <img src="https://github.com/jeanbaptistedebize/LaHacks/blob/main/floramap.png?raw=true" width="500"/>
 </p>
 
-### Collect, Learn, Help the Environment
+### Collect, Learn, Support the Environment
 
 ## Inspiration
 We interact with plants almost everyday -- breathe in their oxygen, enjoy their vegetables, and are comforted by their presence. 
