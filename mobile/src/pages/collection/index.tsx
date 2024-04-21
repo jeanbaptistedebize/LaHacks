@@ -1,7 +1,8 @@
-import { Text, View, Image, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground } from 'react-native';
 import TopBar from "../../components/Topbar";
 import { ScrollView } from 'native-base';
-import GARDEN from '../../../assets/garden.png'
+import BottomDrawerMenu from "../../components/plantDescription";
+import { useState } from 'react';
 
 const templatePlantList = [
   {id: 1, type: "flower", name: "homhunculus munculus", image: 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?cs=srgb&dl=pexels-jonaskakaroto-736230.jpg&fm=jpg'},
@@ -18,6 +19,12 @@ const templatePlantList = [
 ]
 
 export default function Collection() {
+  const [isMenuUp, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuUp);
+  };
+
   return (
     <View>
       <View style={{
@@ -67,6 +74,17 @@ export default function Collection() {
         </View>
         </ScrollView>
       </View>
+      <BottomDrawerMenu
+        isOpen={true}
+        onClose={toggleMenu}
+        plant={{
+          name: "Flower Name",
+          image: "",
+          rarity: "common",
+          description:
+            "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
+        }}
+      />
       <TopBar/>
     </View>
   );

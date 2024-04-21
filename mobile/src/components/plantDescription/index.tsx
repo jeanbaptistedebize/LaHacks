@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     fontFamily: "Itim_400Regular",
   },
   container: {
+    position: 'absolute',
     height: "50%",
     bottom: 0,
     left: 0,

@@ -67,51 +67,6 @@ function TopBar() {
       </View>
     </View>
   );
-  // return (
-  //   <HStack
-  //     w="full"
-  //     h={60}
-  //     borderColor="#BDBDBD"
-  //     backgroundColor={"#237744"}
-  //     borderWidth={1}
-  //     px={2.5}
-  //     borderTopRightRadius={16}
-  //     borderTopLeftRadius={16}
-  //     borderTopWidth={0}
-  //     alignItems="center"
-  //     justifyContent="space-between"
-  //     position={"absolute"}
-  //     bottom={0}
-  //     width="100%"
-  //   >
-  //     <CustomIconButton onPress={navigateToPath("/")}>
-  //       <Box height="30px" width="30px">
-  //         <Image style={{ height: "100%", width: "100%" }} source={EARTH} />
-  //       </Box>
-  //     </CustomIconButton>
-  //     <HStack justifyContent="space-between" alignItems="center">
-  //       <CustomIconButton onPress={navigateToPath("/camera")}>
-  //         <Box height="35px" width="35px">
-  //           <Image style={{ height: "100%", width: "100%" }} source={TRESOR} />
-  //         </Box>
-  //       </CustomIconButton>
-  //       <View
-  //         style={{
-  //           borderWidth: 1,
-  //           borderColor: "#BDBDBD",
-  //           marginLeft: 5,
-  //           marginRight: 3,
-  //           height: 30,
-  //         }}
-  //       />
-  //       <CustomIconButton onPress={navigateToPath("/collection")}>
-  //         <Box height="35px" width="35px">
-  //           <Image style={{ height: "100%", width: "100%" }} source={PROFILE} />
-  //         </Box>
-  //       </CustomIconButton>
-  //     </HStack>
-  //   </HStack>
-  // );
 }
 
 export default TopBar;
