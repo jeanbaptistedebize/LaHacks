@@ -32,7 +32,7 @@ In addition, FloraQuest helps you to be aware of and learn about your environmen
 
 ### AI Plant Classification
 
-FloraQuest is built on top of 3 AI Models for classification. We use **Gemini** for initial classification, and we use **FetchAI agents** for more specialized classification.
+FloraQuest is built on top of 3 AI Models for classification. We use **Gemini** for initial classification, and we use **ResNet50** for leaf classification and a **Pretrained Model** for disease classification.
 1. Gemini API - General Classifier
     - We use gemini to initially classify the plant based on image and location
     - if Gemini determines the image to be a close-up of a leaf, it will be sent to the leaf classifier
