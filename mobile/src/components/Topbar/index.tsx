@@ -12,7 +12,7 @@ import CAMERA from "../../../assets/camera.png";
 import GARDEN from "../../../assets/garden.png";
 // @ts-ignore
 import TRESOR from "../../../assets/icons/tresor.png";
-import { Box, HStack, View } from "native-base";
+import { Box, View } from "native-base";
 import { Image, Text, ImageBackground } from "react-native";
 import { useNavigate } from "react-router-native";
 import CustomIconButton from "../CustomIconButton/CustomIconButton";
@@ -25,10 +25,16 @@ interface TopBarProps {
 
 function TopBar({ isCameraPage, onCameraClick }: TopBarProps) {
   const navigate = useNavigate();
-  const [login, { isLoading }] = useLoginMutation();
+  // const [login, { isLoading }] = useLoginMutation();
 
   const navigateToPath = (path: string) => () => navigate(path);
 
+  // useEffect( () => {
+  //   login({
+  //     email: "test@test.test",
+  //     password: "1234aaBB@",
+  //   }).unwrap();
+  // }, []);
   return (
     <View
       style={{

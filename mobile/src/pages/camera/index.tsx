@@ -4,9 +4,9 @@ import {
   Button,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { useAddPlantMutation } from "../../services/user/user";
 import TopBar from "../../components/Topbar";
@@ -110,11 +110,14 @@ export default function CameraPage() {
           }}
         >
           {plantNameIsLoading && (
-            <Text
-              style={{ ...styles.text, alignSelf: "center", marginTop: 20 }}
-            >
-              "Is loading..."
-            </Text>
+            <View style={{ paddingTop: 100}}>
+              <ActivityIndicator size="large" color="#AB97F9" />
+              <Text
+                style={{ ...styles.text, textAlign: "center", marginTop: 20 }}
+              >
+                We are curently procesing your image!!
+              </Text>
+            </View>
           )}
           {isMenuOpen && (
             <View
