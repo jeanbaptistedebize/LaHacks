@@ -31,7 +31,7 @@ export default function CameraPage() {
       longitude: -118.44688096398609,
     },
   });
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [imageb64, setImageb64] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -87,7 +87,9 @@ export default function CameraPage() {
   const takePicture = async () => {
     if (cameraRef) {
       const photo = await cameraRef.takePictureAsync({ base64: true });
+      setImageb64(photo.base64);
       await getPlant(photo.base64);
+      toggleMenu();
     }
   };
 
@@ -104,20 +106,36 @@ export default function CameraPage() {
             flexDirection: "column",
             alignContent: "center",
             justifyContent: "center",
-            marginTop: 150,
+            marginTop: 64,
           }}
         >
-          <Text style={{ ...styles.text, alignSelf: "center", marginTop: 20 }}>
-            {plantNameIsLoading ? "Is loading..." : plantName}
-          </Text>
-          {plantName && (
-            <Image
-              source={mapPinBig}
-              style={{ width: 100, height: 100, alignSelf: "center" }}
-            />
+          {plantNameIsLoading && (
+            <Text
+              style={{ ...styles.text, alignSelf: "center", marginTop: 20 }}
+            >
+              "Is loading..."
+            </Text>
+          )}
+          {isMenuOpen && (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Image
+                source={mapPinBig}
+                style={{ width: 100, height: 100, alignSelf: "center" }}
+              />
+              <Image
+                source={mapPinBig}
+                style={{ width: 100, height: 100, alignSelf: "center" }}
+              />
+            </View>
           )}
         </View>
-        {!isMenuOpen && (
+        {/* {!isMenuOpen && (
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Text style={styles.text}>Flip Camera</Text>
@@ -126,14 +144,14 @@ export default function CameraPage() {
               <Text style={styles.text}>Take Picure</Text>
             </TouchableOpacity>
           </View>
-        )}
+        )} */}
         {isMenuOpen && (
           <BottomDrawerMenu
             isOpen={isMenuOpen}
             onClose={toggleMenu}
             plant={{
-              name: "Flower Name",
-              image: "",
+              name: plantName,
+              image: imageb64,
               rarity: "common",
               description:
                 "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
