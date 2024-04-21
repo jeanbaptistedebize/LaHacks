@@ -45,7 +45,7 @@ async function generateImage() {
 //o
 
 async function predictLeafSpecies(imageBase64) {
-    const url = ' http://127.0.0.1:5000/predict';  // URL of the Flask server
+    const url = ' http://127.0.0.1:5000';  // URL of the Flask server
     const data = {
         image: imageBase64
     };
@@ -64,7 +64,7 @@ async function predictLeafSpecies(imageBase64) {
         }
 
         const result = await response.json();
-        //console.log('Predicted species:', result.species);
+        console.log('Predicted species:', result.species);
         return result.species;
     } catch (error) {
         console.error('Error predicting species:', error);
