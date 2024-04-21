@@ -41,5 +41,5 @@ export const userApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetUserQuery, useAddPlantMutation, useGetAllPlantQuery } =
+export const { useGetUserQuery, useAddPlantMutation, useGetAllPlantQuery, useGetOwnedPlantQuery } =
   userApi;
