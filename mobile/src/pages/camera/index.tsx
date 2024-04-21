@@ -113,7 +113,7 @@ export default function CameraPage() {
               <Text
                 style={{ ...styles.text, textAlign: "center", marginTop: 20 }}
               >
-                We are curently procesing your image!!
+                We are curently processing your image!!
               </Text>
             </View>
           )}
