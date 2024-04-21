@@ -87,7 +87,7 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
               longitude: plant.coord[1],
             }}
             centerOffset={{ x: 0, y: -10 }}
-            title={plant.name}
+            title={`${plant.commonname} (${plant.scientificname})`}
           />
         ))}
     </MapView>
@@ -108,26 +108,26 @@ MapMarkerAutoZoom.propTypes = {
   ),
 };
 
-const mapStyle=[
+const mapStyle = [
   {
-    "featureType": "poi.business",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "poi.business",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "featureType": "poi.business",
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    featureType: "poi.business",
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
-  }
-]
+        visibility: "off",
+      },
+    ],
+  },
+];
 
 const styles = StyleSheet.create({
   map: {

@@ -1,24 +1,24 @@
-import { Text, View, ImageBackground } from 'react-native';
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 import TopBar from "../../components/Topbar";
-import { ScrollView, Box } from 'native-base';
+import { ScrollView, Box } from "native-base";
 import BottomDrawerMenu from "../../components/plantDescription";
+// @ts-ignore
 import FLORAMAP from "../../../assets/floramap.png";
-import { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { useState } from "react";
+import { PlantAll } from "../../services/user/user.dto";
+import { useGetOwnedPlantQuery } from "../../services/user/user";
 
-const templatePlantList = [
-  {id: 1, type: "flower", name: "homhunculus munculus", image: 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?cs=srgb&dl=pexels-jonaskakaroto-736230.jpg&fm=jpg'},
-  {id: 2, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 3, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 4, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 5, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 6, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 7, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 8, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 9, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 10, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 11, type: "flower", name: "homhunculus munculus", image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhYfRwxLakUvGTspE2UDPI8pUviM3wi-2xV4EcL-ePrg&s'},
-]
+const RARITY_MAP = {
+  common: "#FF8A8A",
+  uncommom: "#FFD45F",
+  rare: "#788BFF",
+} as const;
 
 interface Props {
   onPress?: () => void;
@@ -28,7 +28,11 @@ interface Props {
 function CustomIconButton({ onPress, children }: Props) {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Box width="min-content" height="min-content" backgroundColor="transparent">
+      <Box
+        width="min-content"
+        height="min-content"
+        backgroundColor="transparent"
+      >
         {children}
       </Box>
     </TouchableOpacity>
@@ -36,79 +40,77 @@ function CustomIconButton({ onPress, children }: Props) {
 }
 
 export default function Collection() {
+  const { data } = useGetOwnedPlantQuery();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+  const [flowerSelected, setFlower] = useState<PlantAll | null>(null);
+
   const toggleMenu = () => {
+    if (!isMenuOpen) setFlower(null);
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const selectFlower = (flower: PlantAll) => {
+    console.log(flower.commonname);
+    toggleMenu();
+    setFlower(flower);
+  };
+
   function coolfunc() {
-    var list = []
+    var list = [];
     for (let i = 0; i < 12; i++) {
-      list[i] = <View style={{
-        height: 120,
-        width: 120,
-        backgroundColor: '#23774400',
-        borderRadius: 15,
-        margin: 8,
-      }}>
-        
-      </View>
+      list[i] = (
+        <View
+          style={{
+            height: 120,
+            width: 120,
+            backgroundColor: "#23774400",
+            borderRadius: 15,
+            margin: 8,
+          }}
+        ></View>
+      );
     }
     return list;
   }
 
-  function stateChecker() {
-    if (isMenuOpen) {
-      return <BottomDrawerMenu
-      isOpen={isMenuOpen}
-      onClose={toggleMenu}
-      delay={300}
-      plant={{
-        name: "Flower Name",
-        image: "",
-        rarity: "common",
-        description:
-          "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
-      }}
-    />
-    } else {
-      return (<BottomDrawerMenu
-          isOpen={isMenuOpen}
-          onClose={toggleMenu}
-          delay={300}
-          plant={{
-            name: "Flower Name",
-            image: "",
-            rarity: "common",
-            description:
-              "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
-          }}
-      />)
-    }
-  }
-
   return (
     <View>
-      <View style={{position: 'absolute', top: 0, width: 200, height: 100, zIndex: 5, padding: 20}}>
-        <ImageBackground resizeMode='contain' source={FLORAMAP} style={{width: '100%', height: '100%'}}></ImageBackground>
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          width: 200,
+          height: 100,
+          zIndex: 5,
+          padding: 20,
+        }}
+      >
+        <ImageBackground
+          resizeMode="contain"
+          source={FLORAMAP}
+          style={{ width: "100%", height: "100%" }}
+        ></ImageBackground>
       </View>
-      <View style={{
-        display: 'flex',
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#EBFFD7',
-      }}>
-        <Text style={{
-          height: 'auto',
-          margin: 10,
-          marginRight: 30,
-          marginTop: 50,
-          backgroundColor: '#EBFFD7',
-          fontSize: 18,
-          fontWeight: 700,
-          textAlign: 'right'
-        }}>
+      <View
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#EBFFD7",
+        }}
+      >
+        <Text
+          style={{
+            height: "auto",
+            margin: 10,
+            marginRight: 30,
+            marginTop: 50,
+            backgroundColor: "#EBFFD7",
+            fontSize: 18,
+            fontWeight: "700",
+            textAlign: "right",
+          }}
+        >
           Garden
         </Text>
         <View style={{}}>
@@ -135,60 +137,106 @@ export default function Collection() {
               <View style={{display: 'flex', flex: 1, flexDirection: 'row', backgroundColor: '#FFFFFF00', alignItems: 'center'}}>
               <ImageBackground source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603'}}
                   style={{
-                    height: 20,
-                    width: 20,
+                    display: "flex",
+                    flex: 1,
+                    flexDirection: "row",
+                    backgroundColor: "#FFFFFF00",
+                    alignItems: "center",
                   }}
                 />
-                <Text style={{marginLeft: 12, padding: 10, paddingLeft: 0}}>
-                  Search
-                </Text>
-              </View>
-              <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', borderColor: 'black', borderWidth: 1, borderStyle: 'solid',  width: 'min-content', height: '100%', backgroundColor: '#FFFFFF60'}}>
-                  <ImageBackground source={{uri: 'https://cdn-icons-png.flaticon.com/256/9851/9851190.png'}}
-                      style={{
-                        height: 18,
-                        width: 18,
-                        margin: 5
-                      }}
-                    />
-                  <Text style={{marginRight: 5}}>SORT BY</Text>
-              </View>
-            </View>
-            {
-              templatePlantList.map((item)=><CustomIconButton onPress={()=>{setIsMenuOpen(true)}}>
-                <View style={{
-                  height: 120,
-                  width: 117,
-                  backgroundColor: '#237744',
-                  borderRadius: 15,
-                  margin: 20,
-                  shadowColor: 'black',
-                  shadowOpacity: 0.7,
-                  shadowRadius: 4,
-                  shadowOffset: {width: 3, height: 5}
-                }}>
-                  <ImageBackground borderRadius="25px" resizeMode='fit' style={{height: '100%', width: '100%'}} source={{
-                    uri: item.image,
-                  }} />
-                  <View style={{
-                    position: 'absolute',
-                    backgroundColor: 'rgba(0,0,0,0.2)',
-                    width: '100%',
-                    height: 5,
-                    bottom: 0,
-                    transform: 'translateY(25px)',
-                    borderRadius: 20}}/>
-                  
+                  <ImageBackground
+                    source={{
+                      uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603",
+                    }}
+                    style={{
+                      height: 20,
+                      width: 20,
+                    }}
+                  />
+                  <Text style={{ marginLeft: 12, padding: 10, paddingLeft: 0 }}>
+                    Search
+                  </Text>
                 </View>
-              </CustomIconButton>)
-            }
-            {coolfunc()}
-          </View>
-        </ScrollView>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderColor: "black",
+                    borderWidth: 1,
+                    borderStyle: "solid",
+                    height: "100%",
+                    backgroundColor: "#FFFFFF60",
+                  }}
+                >
+                  <ImageBackground
+                    source={{
+                      uri: "https://cdn-icons-png.flaticon.com/256/9851/9851190.png",
+                    }}
+                    style={{
+                      height: 18,
+                      width: 18,
+                      margin: 5,
+                    }}
+                  />
+                  <Text style={{ marginRight: 5 }}>SORT BY</Text>
+                </View>
+              </View>
+              {!data ? (
+                <ActivityIndicator />
+              ) : (
+                data.plants.map((item) => (
+                  <CustomIconButton
+                    onPress={() => {
+                      selectFlower(item);
+                    }}
+                  >
+                    <View
+                      style={{
+                        height: 120,
+                        width: 117,
+                        backgroundColor: "#237744",
+                        borderWidth: 4,
+                        borderRadius: 15,
+                        borderColor: RARITY_MAP[item.rarity] ?? "#237744",
+                        margin: 10,
+                        shadowColor: "black",
+                        shadowOpacity: 0.7,
+                        shadowRadius: 4,
+                        shadowOffset: { width: 3, height: 5 },
+                      }}
+                    >
+                      <ImageBackground
+                        borderRadius={15}
+                        style={{ height: "100%", width: "100%" }}
+                        source={{
+                          uri: `data:image/png;base64,${item.image}`,
+                        }}
+                      />
+                    </View>
+                  </CustomIconButton>
+                ))
+              )}
+              {coolfunc()}
+            </View>
+          </ScrollView>
         </View>
-        {stateChecker()}
+        {isMenuOpen && flowerSelected ? (
+          <BottomDrawerMenu
+            isOpen={isMenuOpen}
+            onClose={toggleMenu}
+            delay={300}
+            plant={flowerSelected}
+          />
+        ) : (
+          <BottomDrawerMenu
+            isOpen={isMenuOpen}
+            onClose={toggleMenu}
+            delay={100}
+          />
+        )}
       </View>
-      <TopBar/>
+      <TopBar />
     </View>
   );
 }

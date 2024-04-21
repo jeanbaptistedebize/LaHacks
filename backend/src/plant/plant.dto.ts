@@ -1,7 +1,11 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { PLANT_TYPES } from '@prisma/client';
-import { Type } from 'class-transformer';
-import { IsString, IsUUID, IsArray, IsNumber } from 'class-validator';
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import {
+  IsString,
+  IsUUID,
+  IsArray,
+  IsNumber,
+  IsBoolean,
+} from 'class-validator';
 
 export class PlantModel {
   @ApiProperty()
@@ -10,11 +14,39 @@ export class PlantModel {
 
   @ApiProperty()
   @IsString()
-  type: PLANT_TYPES;
+  commonname: string;
 
   @ApiProperty()
   @IsString()
-  name: string;
+  scientificname: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isleaf: Boolean;
+
+  @ApiProperty()
+  @IsString()
+  family: string;
+
+  @ApiProperty()
+  @IsString()
+  genus: string;
+
+  @ApiProperty()
+  @IsString()
+  species: string;
+
+  @ApiProperty()
+  @IsString()
+  description: string;
+
+  @ApiProperty()
+  @IsString()
+  disease: string;
+
+  @ApiProperty()
+  @IsString()
+  rarity: string;
 
   @ApiProperty()
   @IsArray()
@@ -30,9 +62,9 @@ export class PlantModel {
   createdAt: Date;
 }
 
-export class CreatePlantModel extends OmitType(PlantModel, [
-  'id',
-  'createdAt',
+export class CreatePlantModel extends PickType(PlantModel, [
+  'image',
+  'coord',
 ]) {}
 
 export class CreatePlantResponse {
@@ -41,5 +73,8 @@ export class CreatePlantResponse {
 
 export class GetAllPlants {
   @ApiProperty()
-  plants: Omit<PlantModel, 'image'>[];
+  plants: Pick<
+    PlantModel,
+    'id' | 'coord' | 'commonname' | 'scientificname' | 'rarity' | 'createdAt'
+  >[];
 }
