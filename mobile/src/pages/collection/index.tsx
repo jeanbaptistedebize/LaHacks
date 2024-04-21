@@ -1,9 +1,16 @@
-import { Text, View, ActivityIndicator, Image } from "react-native";
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import TopBar from "../../components/Topbar";
 import { ScrollView } from "native-base";
 import BottomDrawerMenu from "../../components/plantDescription";
 import { useState } from "react";
 import { useGetOwnedPlantQuery } from "../../services/user/user";
+import { PlantAll } from "../../services/user/user.dto";
 
 const RARITY_MAP = {
   common: "#FF8A8A",
@@ -14,9 +21,17 @@ const RARITY_MAP = {
 export default function Collection() {
   const { data } = useGetOwnedPlantQuery();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [flowerSelected, setFlower] = useState<PlantAll | null>(null);
 
   const toggleMenu = () => {
+    if (!isMenuOpen) setFlower(null);
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const selectFlower = (flower: PlantAll) => {
+    console.log(flower.commonname);
+    toggleMenu();
+    setFlower(flower);
   };
 
   function coolfunc() {
@@ -35,40 +50,6 @@ export default function Collection() {
       );
     }
     return list;
-  }
-
-  function stateChecker() {
-    if (isMenuOpen) {
-      return (
-        <BottomDrawerMenu
-          isOpen={isMenuOpen}
-          onClose={toggleMenu}
-          delay={300}
-          plant={{
-            name: "Flower Name",
-            image: "",
-            rarity: "common",
-            description:
-              "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
-          }}
-        />
-      );
-    } else {
-      return (
-        <BottomDrawerMenu
-          isOpen={isMenuOpen}
-          onClose={toggleMenu}
-          delay={300}
-          plant={{
-            name: "Flower Name",
-            image: "",
-            rarity: "common",
-            description:
-              "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
-          }}
-        />
-      );
-    }
   }
 
   return (
@@ -114,7 +95,7 @@ export default function Collection() {
                 <ActivityIndicator />
               ) : (
                 data.plants.map((item) => (
-                  <View
+                  <TouchableOpacity
                     style={{
                       height: 120,
                       width: 120,
@@ -124,6 +105,7 @@ export default function Collection() {
                       borderColor: RARITY_MAP[item.rarity] ?? "#237744",
                       borderWidth: 4,
                     }}
+                    onPress={() => selectFlower(item)}
                   >
                     <Image
                       resizeMode="cover"
@@ -134,14 +116,27 @@ export default function Collection() {
                         height: "100%",
                       }}
                     />
-                  </View>
+                  </TouchableOpacity>
                 ))
               )}
               {coolfunc()}
             </View>
           </ScrollView>
         </View>
-        {stateChecker()}
+        {isMenuOpen && flowerSelected ? (
+          <BottomDrawerMenu
+            isOpen={isMenuOpen}
+            onClose={toggleMenu}
+            delay={300}
+            plant={flowerSelected}
+          />
+        ) : (
+          <BottomDrawerMenu
+            isOpen={isMenuOpen}
+            onClose={toggleMenu}
+            delay={300}
+          />
+        )}
       </View>
       <TopBar />
     </View>

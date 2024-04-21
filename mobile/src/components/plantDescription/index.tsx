@@ -11,18 +11,12 @@ import {
 //@ts-ignore
 import flower from "../../../assets/flower.png";
 import { ScrollView } from "native-base";
-
-interface Plant {
-  name: string;
-  image?: string;
-  description: string;
-  rarity: string;
-}
+import { PlantAll } from "../../services/user/user.dto";
 
 interface BottomDrawerMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  plant: Plant;
+  plant?: PlantAll;
   delay: number;
 }
 
@@ -74,9 +68,12 @@ const BottomDrawerMenu = ({
         <View style={{ height: 90 }} />
         <View style={styles.container}>
           <Image
-            opacity={isMenuOpen ? 1 : 0}
             resizeMode="cover"
-            source={plant.image ? { uri: `data:image/png;base64,${plant.image}` } : flower}
+            source={
+              plant?.image
+                ? { uri: `data:image/png;base64,${plant.image}` }
+                : null
+            }
             style={{
               width: 140,
               height: 140,
@@ -86,11 +83,15 @@ const BottomDrawerMenu = ({
               borderRadius: 90,
             }}
           />
-          <View opacity={isMenuOpen ? 1 : 0} style={{ gap: 16, marginTop: 70 }}>
-            <Text style={styles.title}>{plant.name}</Text>
-            <Text style={styles.description}>{plant.description}</Text>
-            <Text style={styles.rarity}>Rarity: {plant.rarity}</Text>
-          </View>
+          {plant && (
+            <View style={{ gap: 16, marginTop: 70 }}>
+              <Text style={styles.title}>
+                {plant.commonname} ({plant.scientificname})
+              </Text>
+              <Text style={styles.description}>{plant.description}</Text>
+              <Text style={styles.rarity}>Rarity: {plant.rarity}</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </Animated.View>
