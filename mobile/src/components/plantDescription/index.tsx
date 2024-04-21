@@ -11,18 +11,12 @@ import {
 //@ts-ignore
 import flower from "../../../assets/flower.png";
 import { ScrollView } from "native-base";
-
-interface Plant {
-  name: string;
-  image?: string;
-  description: string;
-  rarity: string;
-}
+import { PlantAll } from "../../services/user/user.dto";
 
 interface BottomDrawerMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  plant: Plant;
+  plant?: PlantAll;
   delay: number;
 }
 
@@ -45,13 +39,15 @@ const BottomDrawerMenu = ({
   }, [isOpen]);
 
   React.useEffect(() => {
-    Animated.timing(animation, {
-      toValue: isMenuOpen ? 1 : 0,
-      duration: delay, // Change duration as per your requirement
-      useNativeDriver: true,
-    }).start(({ finished }) => {
-      if (finished && !isMenuOpen) onClose();
-    });
+    if (plant) {
+      Animated.timing(animation, {
+        toValue: isMenuOpen ? 1 : 0,
+        duration: delay, // Change duration as per your requirement
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (finished && !isMenuOpen) onClose();
+      });
+    }
   }, [isMenuOpen]);
 
   return (
@@ -73,24 +69,29 @@ const BottomDrawerMenu = ({
       >
         <View style={{ height: 70 }} />
         <View style={styles.container}>
-          <Image
-            opacity={isMenuOpen ? 1 : 0}
-            resizeMode="cover"
-            source={plant.image ? { uri: `data:image/png;base64,${plant.image}` } : flower}
-            style={{
-              width: 140,
-              height: 140,
-              alignSelf: "center",
-              position: "absolute",
-              top: "-10%",
-              borderRadius: 90,
-            }}
-          />
-          <View opacity={isMenuOpen ? 1 : 0} style={{ gap: 16, marginTop: 70 }}>
-            <Text style={styles.title}>{plant.name}</Text>
-            <Text style={styles.description}>{plant.description}</Text>
-            <Text style={styles.rarity}>Rarity: {plant.rarity}</Text>
-          </View>
+          {plant && (
+            <Image
+              resizeMode="cover"
+              source={{ uri: `data:image/png;base64,${plant.image}` }}
+              style={{
+                width: 140,
+                height: 140,
+                alignSelf: "center",
+                position: "absolute",
+                top: "-10%",
+                borderRadius: 90,
+              }}
+            />
+          )}
+          {plant && (
+            <View style={{ gap: 16, marginTop: 70 }}>
+              <Text style={styles.title}>
+                {plant.commonname} ({plant.scientificname})
+              </Text>
+              <Text style={styles.description}>{plant.description}</Text>
+              <Text style={styles.rarity}>Rarity: {plant.rarity}</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </Animated.View>
