@@ -18,6 +18,17 @@ If you are the first to catalog a new plant, you get extra points!
 FloraQuest is a pokemon go inspired app to virtually collect plants. With a robust map of plant locations, their diseases, and densities, users are supporting environmental efforts by cataloging flora. 
 FloraQuest raises awareness about the environment around you, teaches you about your home, and will help researchers to document the vast world of the plant kingdom. 
 
+<p align="center">
+  <img src="https://github.com/jeanbaptistedebize/LaHacks/blob/main/map.png?raw=true" width="200">
+  <img src="https://github.com/jeanbaptistedebize/LaHacks/blob/main/camera.png?raw=true" width="200">
+  <img src="https://github.com/jeanbaptistedebize/LaHacks/blob/main/garden.png?raw=true" width="200">
+  <!--
+  <img src="camera.png?raw=true" width="200">
+  <img src="map.png?raw=true" width="200">
+  <img src="garden.png?raw=true" width="200">
+  -->
+</p>
+
 ## Features + Tech
 
 ### AI Plant Classification
