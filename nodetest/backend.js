@@ -24,7 +24,7 @@ async function geminiClassify() {
     const prompt = `
     You are given an image of a plant. Your response must be a JSON object containing 8 fields that are all strings. Rarity should be common, uncommon, or rare. One of the important fields is isleaf. If the picture is a closeup of a leaf, this field should be true. Otherwise it should be false. In addition, disease should always be "healthy". Here is what you need to return: 
 
-    commonname, scientificname, isleaf, family, genus, species, description, disease. 
+    commonname, scientificname, isleaf, family, genus, species, description, disease, rarity. 
 
     The description should be three sentences. Do not return null for any fields. If you are not sure, make a good guess. Do not include backticks or the word json. The response should begin with { and end with }.
 
