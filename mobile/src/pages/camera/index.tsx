@@ -1,5 +1,5 @@
 import { Camera, CameraType } from "expo-camera";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   StyleSheet,
@@ -14,6 +14,7 @@ import TopBar from "../../components/Topbar";
 //@ts-ignore
 import mapPinBig from "../../../assets/gifs/firework.gif";
 import BottomDrawerMenu from "../../components/plantDescription";
+import * as Location from "expo-location";
 
 export default function CameraPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,6 +24,21 @@ export default function CameraPage() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [cameraRef, setCameraRef] = useState(null);
   const [addPlant] = useAddPlantMutation();
+  const [location, setLocation] = useState<Location.LocationObject>({
+    // @ts-ignore
+    coords: {
+      latitude: 34.070467452049336,
+      longitude: -118.44688096398609,
+    },
+  });
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -45,7 +61,6 @@ export default function CameraPage() {
   }
 
   function toggleCameraType() {
-    console.log("here");
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
@@ -55,11 +70,11 @@ export default function CameraPage() {
     try {
       setPlantName(null);
       setPlantNameIsLoading(true);
-
+      if (!location) throw new Error("here");
       const t = await addPlant({
         type: "FLOWER",
         name: "ROSE",
-        coord: [0, 0],
+        coord: [location.coords.latitude, location.coords.longitude],
         image: imageb64,
       }).unwrap();
       setPlantNameIsLoading(false);
@@ -126,7 +141,7 @@ export default function CameraPage() {
           />
         )}
       </Camera>
-      <TopBar />
+      <TopBar isCameraPage onCameraClick={takePicture} />
     </View>
   );
 }
