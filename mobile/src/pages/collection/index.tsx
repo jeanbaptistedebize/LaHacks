@@ -7,18 +7,12 @@ import {
 } from "react-native";
 import TopBar from "../../components/Topbar";
 import { ScrollView, Box } from "native-base";
-import BottomDrawerMenu from "../../components/plantDescription";
+import BottomDrawerMenu, { RARITY_MAP } from "../../components/plantDescription";
 // @ts-ignore
 import FLORAMAP from "../../../assets/floramap.png";
 import { useState } from "react";
 import { PlantAll } from "../../services/user/user.dto";
 import { useGetOwnedPlantQuery } from "../../services/user/user";
-
-const RARITY_MAP = {
-  common: "#FF8A8A",
-  uncommom: "#FFD45F",
-  rare: "#788BFF",
-} as const;
 
 interface Props {
   onPress?: () => void;
