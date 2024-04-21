@@ -105,14 +105,13 @@ export default function Collection() {
             textAlign: "right",
           }}
         >
-          Garden
         </Text>
         <View style={{}}>
         <ScrollView style={{position: 'absolute', height: 900}}>
           <View style={{
             borderTopRightRadius: 30,
             borderTopLeftRadius: 30,
-            backgroundColor: '#EAFFEA',
+            backgroundColor: '#EBFFD7',
             flex: 1,
             marginTop: 0,
             padding: 30,
@@ -129,28 +128,20 @@ export default function Collection() {
               flexDirection: 'row',
             }}>
               <View style={{display: 'flex', flex: 1, flexDirection: 'row', backgroundColor: '#FFFFFF00', alignItems: 'center'}}>
-                  <ImageBackground source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603'}}
-                    style={{
-                      display: "flex",
-                      flex: 1,
-                      flexDirection: "row",
-                      backgroundColor: "#FFFFFF00",
-                      alignItems: "center",
-                    }}
-                  />
-                  <ImageBackground
-                    source={{
-                      uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603",
-                    }}
-                    style={{
-                      height: 20,
-                      width: 20,
-                    }}
-                  />
-                  <Text style={{ marginLeft: 12, padding: 10, paddingLeft: 0 }}>
-                    Search
-                  </Text>
-                </View>
+                <ImageBackground
+                  source={{
+                    uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603",
+                  }}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    marginLeft: 10
+                  }}
+                />
+                <Text style={{ marginLeft: 12, padding: 10, paddingLeft: 0 }}>
+                  Search
+                </Text>
+              </View>
                 <View
                   style={{
                     display: "flex",
@@ -161,6 +152,7 @@ export default function Collection() {
                     borderStyle: "solid",
                     height: "100%",
                     backgroundColor: "#FFFFFF60",
+                    marginRight: 5,
                   }}
                 >
                   <ImageBackground
@@ -187,13 +179,13 @@ export default function Collection() {
                   >
                     <View
                       style={{
-                        height: 117,
-                        width: 117,
+                        height: 119,
+                        width: 119,
                         backgroundColor: "#237744",
                         borderWidth: 4,
                         borderRadius: 15,
                         borderColor: RARITY_MAP[item.rarity] ?? "#237744",
-                        margin: 20,
+                        margin: 18,
                         shadowColor: "black",
                         shadowOpacity: 0.7,
                         shadowRadius: 4,
@@ -207,14 +199,7 @@ export default function Collection() {
                           uri: `data:image/png;base64,${item.image}`,
                         }}
                       />
-                      <View style={{
-                        position: 'absolute',
-                        backgroundColor: 'rgba(0,0,0,0.2)',
-                        width: '100%',
-                        height: 5,
-                        bottom: 0,
-                        transform: 'translateY(28px)',
-                        borderRadius: 20}}/>
+
                     </View>
                   </CustomIconButton>
                 ))
