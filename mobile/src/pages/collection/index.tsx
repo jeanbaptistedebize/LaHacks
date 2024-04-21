@@ -118,8 +118,6 @@ export default function Collection() {
             borderTopLeftRadius: 20,
             backgroundColor: '#EAFFEA',
             flex: 1,
-            marginLeft: 20,
-            marginRight: 20,
             marginTop: 0,
             padding: 30,
             display: 'flex',
@@ -127,7 +125,7 @@ export default function Collection() {
             flexWrap: 'wrap'
           }}>
             <View style={{
-              width: 274,
+              width: 314,
               height: 36,
               marginTop: -10,
               marginBottom: 5,
@@ -163,7 +161,7 @@ export default function Collection() {
                   width: 117,
                   backgroundColor: '#237744',
                   borderRadius: 15,
-                  margin: 10,
+                  margin: 20,
                   shadowColor: 'black',
                   shadowOpacity: 0.7,
                   shadowRadius: 4,
@@ -172,6 +170,14 @@ export default function Collection() {
                   <ImageBackground borderRadius="25px" resizeMode='fit' style={{height: '100%', width: '100%'}} source={{
                     uri: item.image,
                   }} />
+                  <View style={{
+                    position: 'absolute',
+                    backgroundColor: 'rgba(0,0,0,0.2)',
+                    width: '100%',
+                    height: 5,
+                    bottom: 0,
+                    transform: 'translateY(25px)',
+                    borderRadius: 20}}/>
                   
                 </View>
               </CustomIconButton>)
