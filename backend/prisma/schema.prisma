@@ -25,13 +25,21 @@ model User {
 }
 
 model Plant {
-  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  type      PLANT_TYPES
-  name      String
-  image     String
-  coord     Float[]
-  createdAt DateTime    @default(now())
-  userId    String      @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  user User @relation(fields: [userId], references: [id])
+  commonname     String
+  scientificname String
+  isleaf         Boolean
+  family         String
+  genus          String
+  species        String
+  description    String
+  disease        String
+  rarity         String
+
+  coord     Float[]
+  createdAt DateTime @default(now())
+  userId    String   @db.Uuid
+  image     String
+  user      User     @relation(fields: [userId], references: [id])
 }

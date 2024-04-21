@@ -8,23 +8,45 @@ import {
 } from './plant.dto';
 import { generateImage } from 'utils/geminiCall';
 
+export interface GeminiResponse {
+  commonname: string;
+  scientificname: string;
+  isleaf: boolean;
+  family: string;
+  genus: string;
+  species: string;
+  description: string;
+  disease: string;
+  rarity: string;
+}
+
 @Injectable()
 export class PlantService {
   async addPlant(
     ctx: any,
     plantData: CreatePlantModel,
   ): Promise<CreatePlantResponse> {
-    const res = await generateImage(plantData.image);
-    Logger.debug(`Response: ${res}`);
+    const res: GeminiResponse = await generateImage(plantData.image);
     try {
       const plantDb: Plant = await prisma.plant.create({
-        data: {
+      data: {
           userId: ctx.__user.id,
+          ...{
+            commonname: 'string',
+            scientificname: 'string',
+            isleaf: false,
+            family: 'string',
+            genus: 'string',
+            species: 'string',
+            description: 'string',
+            disease: 'string',
+            rarity: 'string',
+          },
           ...plantData,
-          name: res,
+          ...res,
         },
       });
-      return { name: res };
+      return { name: res.commonname };
     } catch (error) {
       Logger.error(error);
       throw new ConflictException('Plant not added !');
@@ -36,9 +58,10 @@ export class PlantService {
       const plants = await prisma.plant.findMany({
         select: {
           id: true,
-          type: true,
-          name: true,
           coord: true,
+          commonname: true,
+          scientificname: true,
+          rarity: true,
           createdAt: true,
           userId: true,
         },

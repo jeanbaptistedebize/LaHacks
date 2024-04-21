@@ -16,7 +16,7 @@ model_path = '/Users/evancoons/Downloads/model2.pth'  # Specify the path to your
 model = models.resnet50()  # Initialize the ResNet50 model
 num_classes = 184  # Set the number of your output classes
 model.fc = nn.Linear(model.fc.in_features, num_classes)  # Adjust the fully connected layer
-model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+# model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 model.eval()
 
 # Define the image transformations
