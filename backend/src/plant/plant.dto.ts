@@ -35,7 +35,11 @@ export class CreatePlantModel extends OmitType(PlantModel, [
   'createdAt',
 ]) {}
 
+export class CreatePlantResponse {
+  name: string;
+}
+
 export class GetAllPlants {
   @ApiProperty()
-  plants: PlantModel[];
+  plants: Omit<PlantModel, 'image'>[];
 }

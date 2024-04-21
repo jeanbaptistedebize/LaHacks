@@ -6,7 +6,7 @@ import {
   ApiForbiddenResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreatePlantModel } from './plant.dto';
+import { CreatePlantModel, CreatePlantResponse } from './plant.dto';
 import { PlantService } from './plant.service';
 import { OllContext } from 'context/context.decorator';
 import { LoggedMiddleware } from 'middleware/middleware.decorator';
@@ -37,7 +37,7 @@ export class PlantController {
   })
   @LoggedMiddleware(true)
   @Post('/')
-  async addPlant(@OllContext() ctx: any, @Body() body: CreatePlantModel) {
+  async addPlant(@OllContext() ctx: any, @Body() body: CreatePlantModel): Promise<CreatePlantResponse> {
     return this.plantService.addPlant(ctx, body);
   }
 

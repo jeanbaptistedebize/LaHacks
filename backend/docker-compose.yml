@@ -63,6 +63,7 @@ services:
       REDIS_USERNAME: ${REDIS_USERNAME}
       FRONTEND_URL: ${FRONTEND_URL}
       FRONTEND_PORT: ${FRONTEND_PORT}
+      API_KEY_GEM: ${API_KEY_GEM}
     depends_on:
       database:
         condition: service_healthy
