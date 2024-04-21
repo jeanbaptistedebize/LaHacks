@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Animated,
-  Text,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Animated, Text, Image } from "react-native";
 
 import { ScrollView } from "native-base";
 import { PlantAll } from "../../services/user/user.dto";
@@ -94,12 +88,33 @@ const BottomDrawerMenu = ({
             />
           )}
           {plant && (
-            <View style={{ gap: 16, marginTop: 70 }}>
+            <View style={{ gap: 16, marginTop: 70, marginHorizontal: 10 }}>
               <Text style={[styles.title]}>
                 {plant.commonname} ({plant.scientificname})
               </Text>
               <Text style={styles.description}>{plant.description}</Text>
-              <Text style={styles.rarity}>Rarity: {plant.rarity}</Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 15,
+                }}
+              >
+                <Text style={[styles.rarity]}>Family: {plant.family}</Text>
+                <Text style={styles.rarity}>Rarity: {plant.rarity}</Text>
+              </View>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 6,
+                }}
+              >
+                <Text style={styles.rarity}>Disease: {plant.disease}</Text>
+                <Text style={styles.rarity}>Genus: {plant.genus}</Text>
+              </View>
             </View>
           )}
         </View>
