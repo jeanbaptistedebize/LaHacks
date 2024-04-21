@@ -41,4 +41,36 @@ async function generateImage() {
     const result = await model.generateContent([prompt, image]);
     console.log(result.response.text());
 }
-generateImage();
+//generateImage();
+//o
+
+async function predictLeafSpecies(imageBase64) {
+    const url = ' http://127.0.0.1:5000/predict';  // URL of the Flask server
+    const data = {
+        image: imageBase64
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        //console.log('Predicted species:', result.species);
+        return result.species;
+    } catch (error) {
+        console.error('Error predicting species:', error);
+    }
+}
+
+const imagePath = 'sunflower.jpg';
+const base64image = encodeImageToBase64(imagePath);
+console.log(await predictLeafSpecies(base64image));
