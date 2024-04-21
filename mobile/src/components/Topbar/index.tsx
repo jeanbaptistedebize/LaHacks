@@ -25,16 +25,8 @@ interface TopBarProps {
 
 function TopBar({ isCameraPage, onCameraClick }: TopBarProps) {
   const navigate = useNavigate();
-  // const [login, { isLoading }] = useLoginMutation();
 
   const navigateToPath = (path: string) => () => navigate(path);
-
-  // useEffect( () => {
-  //   login({
-  //     email: "test@test.test",
-  //     password: "1234aaBB@",
-  //   }).unwrap();
-  // }, []);
   return (
     <View
       style={{
@@ -68,7 +60,7 @@ function TopBar({ isCameraPage, onCameraClick }: TopBarProps) {
           paddingRight: 25,
         }}
       >
-        <CustomIconButton onPress={navigateToPath("/")}>
+        <CustomIconButton onPress={navigateToPath("/home")}>
           <Box marginLeft="10px" height="40px" width="40px">
             <Image
               style={{ position: "absolute", height: "100%", width: "100%" }}

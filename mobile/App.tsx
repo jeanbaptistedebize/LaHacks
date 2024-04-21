@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./src/store";
 import { useFonts } from "expo-font";
 import { Itim_400Regular } from "@expo-google-fonts/itim";
+import SplashScreen from "./src/pages/splashScreen";
 
 function App() {
   useEffect(() => {
@@ -25,7 +26,8 @@ function App() {
       <NativeRouter>
         <Provider store={store}>
           <Routes>
-            <Route Component={Home} path="" />
+            <Route Component={SplashScreen} path="/" />
+            <Route Component={Home} path="home" />
             <Route Component={CameraPage} path="camera" />
             <Route Component={Collection} path="collection" />
           </Routes>

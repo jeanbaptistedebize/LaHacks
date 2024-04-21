@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  ActivityIndicator,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import * as Location from "expo-location";
 import MapMarkerAutoZoom from "./zoom";
 import TopBar from "../../components/Topbar";
