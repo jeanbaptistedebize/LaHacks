@@ -15,15 +15,61 @@ const templatePlantList = [
   {id: 8, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
   {id: 9, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
   {id: 10, type: "flower", name: "homhunculus munculus", image: 'https://assets-global.website-files.com/6586ad1766809383c71cd41e/65890a233344f1816429ec35_National-Flower-Day.jpeg'},
-  {id: 11, type: "flower", name: "homhunculus munculus", image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhYfRwxLakUvGTspE2UDPI8pUviM3wi-2xV4EcL-ePrg&s'}
+  {id: 11, type: "flower", name: "homhunculus munculus", image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhYfRwxLakUvGTspE2UDPI8pUviM3wi-2xV4EcL-ePrg&s'},
 ]
 
 export default function Collection() {
-  const [isMenuUp, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuUp);
+    setIsMenuOpen(!isMenuOpen);
   };
+
+  function coolfunc() {
+    var list = []
+    for (let i = 0; i < 12; i++) {
+      list[i] = <View style={{
+        height: 120,
+        width: 120,
+        backgroundColor: '#23774400',
+        borderRadius: 15,
+        margin: 8,
+      }}>
+        
+      </View>
+    }
+    return list;
+  }
+
+  function stateChecker() {
+    if (isMenuOpen) {
+      return <BottomDrawerMenu
+      isOpen={isMenuOpen}
+      onClose={toggleMenu}
+      delay={300}
+      plant={{
+        name: "Flower Name",
+        image: "",
+        rarity: "common",
+        description:
+          "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
+      }}
+    />
+    } else {
+      return (<BottomDrawerMenu
+          isOpen={isMenuOpen}
+          onClose={toggleMenu}
+          delay={300}
+          plant={{
+            name: "Flower Name",
+            image: "",
+            rarity: "common",
+            description:
+              "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
+          }}
+      />)
+    }
+  }
 
   return (
     <View>
@@ -43,48 +89,41 @@ export default function Collection() {
         }}>
           Discovered Plants
         </Text>
-        <ScrollView>
-        <View style={{
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
-          backgroundColor: '#EAFFEA',
-          flex: 1,
-          marginLeft: 20,
-          marginRight: 20,
-          marginTop: 0,
-          padding: 30,
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap'
-        }}>
-          {
-            templatePlantList.map((item)=><View style={{
-              height: 110,
-              width: "46%",
-              backgroundColor: '#237744',
-              borderRadius: 15,
-              margin: 5,
-            }}>
-              <ImageBackground borderRadius="25px" resizeMode='fit' style={{height: '100%', width: '100%'}} source={{
-                uri: item.image,
-              }} />
-              
-            </View>)
-          }
-        </View>
+        <View style={{}}>
+        <ScrollView style={{position: 'absolute', height: 900}}>
+          <View style={{
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+            backgroundColor: '#EAFFEA',
+            flex: 1,
+            marginLeft: 20,
+            marginRight: 20,
+            marginTop: 0,
+            padding: 30,
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap'
+          }}>
+            {
+              templatePlantList.map((item)=><View style={{
+                height: 120,
+                width: 120,
+                backgroundColor: '#237744',
+                borderRadius: 15,
+                margin: 8,
+              }}>
+                <ImageBackground borderRadius="25px" resizeMode='fit' style={{height: '100%', width: '100%'}} source={{
+                  uri: item.image,
+                }} />
+                
+              </View>)
+            }
+            {coolfunc()}
+          </View>
         </ScrollView>
+        </View>
+        {stateChecker()}
       </View>
-      <BottomDrawerMenu
-        isOpen={true}
-        onClose={toggleMenu}
-        plant={{
-          name: "Flower Name",
-          image: "",
-          rarity: "common",
-          description:
-            "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
-        }}
-      />
       <TopBar/>
     </View>
   );

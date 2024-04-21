@@ -23,19 +23,21 @@ interface BottomDrawerMenuProps {
   isOpen: boolean;
   onClose: () => void;
   plant: Plant;
+  delay: number;
 }
 
 const BottomDrawerMenu = ({
   isOpen,
   onClose,
   plant,
+  delay,
 }: BottomDrawerMenuProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [animation] = useState(new Animated.Value(0));
 
   const translateY = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [1000, 0], // Change 600 as per your requirement
+    outputRange: [300, 0], // Change 600 as per your requirement
   });
 
   React.useEffect(() => {
@@ -45,7 +47,7 @@ const BottomDrawerMenu = ({
   React.useEffect(() => {
     Animated.timing(animation, {
       toValue: isMenuOpen ? 1 : 0,
-      duration: 300, // Change duration as per your requirement
+      duration: delay, // Change duration as per your requirement
       useNativeDriver: true,
     }).start(({ finished }) => {
       if (finished && !isMenuOpen) onClose();
@@ -61,6 +63,7 @@ const BottomDrawerMenu = ({
       ]}
     >
       <ScrollView
+        scrollEnabled={isMenuOpen}
         scrollEventThrottle={64}
         onScroll={({ nativeEvent }) => {
           if (nativeEvent.contentOffset.y < -30) {
@@ -71,6 +74,7 @@ const BottomDrawerMenu = ({
         <View style={{ height: 90 }} />
         <View style={styles.container}>
           <Image
+            opacity={isMenuOpen ? 1 : 0}
             resizeMode="cover"
             source={flower}
             style={{
@@ -82,7 +86,7 @@ const BottomDrawerMenu = ({
               borderRadius: 90,
             }}
           />
-          <View style={{ gap: 16, marginTop: 70 }}>
+          <View opacity={isMenuOpen ? 1 : 0} style={{ gap: 16, marginTop: 70 }}>
             <Text style={styles.title}>{plant.name}</Text>
             <Text style={styles.description}>{plant.description}</Text>
             <Text style={styles.rarity}>Rarity: {plant.rarity}</Text>
@@ -115,7 +119,6 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 700,
-    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,

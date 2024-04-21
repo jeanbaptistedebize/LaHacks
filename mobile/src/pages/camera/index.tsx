@@ -116,6 +116,7 @@ export default function CameraPage() {
           <BottomDrawerMenu
             isOpen={isMenuOpen}
             onClose={toggleMenu}
+            delay={300}
             plant={{
               name: "Flower Name",
               image: "",
