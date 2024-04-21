@@ -92,7 +92,7 @@ function TopBar({ isCameraPage, onCameraClick }: TopBarProps) {
             <Text
               style={{
                 height: "100%",
-                transform: "translateY(65px)",
+                transform: "translateY(60px)",
                 fontWeight: "bold",
                 color: "white",
                 textAlign: "center",

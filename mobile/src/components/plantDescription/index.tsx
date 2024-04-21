@@ -31,7 +31,7 @@ const BottomDrawerMenu = ({
 
   const translateY = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [300, 0], // Change 600 as per your requirement
+    outputRange: [470, 100], // Change 600 as per your requirement
   });
 
   React.useEffect(() => {
@@ -39,13 +39,15 @@ const BottomDrawerMenu = ({
   }, [isOpen]);
 
   React.useEffect(() => {
-    Animated.timing(animation, {
-      toValue: isMenuOpen ? 1 : 0,
-      duration: delay, // Change duration as per your requirement
-      useNativeDriver: true,
-    }).start(({ finished }) => {
-      if (finished && !isMenuOpen) onClose();
-    });
+    if (plant) {
+      Animated.timing(animation, {
+        toValue: isMenuOpen ? 1 : 0,
+        duration: delay, // Change duration as per your requirement
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (finished && !isMenuOpen) onClose();
+      });
+    }
   }, [isMenuOpen]);
 
   return (
@@ -60,29 +62,27 @@ const BottomDrawerMenu = ({
         scrollEnabled={isMenuOpen}
         scrollEventThrottle={64}
         onScroll={({ nativeEvent }) => {
-          if (nativeEvent.contentOffset.y < -30) {
+          if (nativeEvent.contentOffset.y < -50) {
             setIsMenuOpen(false);
           }
         }}
       >
-        <View style={{ height: 90 }} />
+        <View style={{ height: 70 }} />
         <View style={styles.container}>
-          <Image
-            resizeMode="cover"
-            source={
-              plant?.image
-                ? { uri: `data:image/png;base64,${plant.image}` }
-                : null
-            }
-            style={{
-              width: 140,
-              height: 140,
-              alignSelf: "center",
-              position: "absolute",
-              top: "-10%",
-              borderRadius: 90,
-            }}
-          />
+          {plant && (
+            <Image
+              resizeMode="cover"
+              source={{ uri: `data:image/png;base64,${plant.image}` }}
+              style={{
+                width: 140,
+                height: 140,
+                alignSelf: "center",
+                position: "absolute",
+                top: "-10%",
+                borderRadius: 90,
+              }}
+            />
+          )}
           {plant && (
             <View style={{ gap: 16, marginTop: 70 }}>
               <Text style={styles.title}>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#B8D8F6",
+    backgroundColor: "#FFFDED",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 10,
