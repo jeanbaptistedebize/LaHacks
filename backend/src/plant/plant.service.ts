@@ -1,11 +1,7 @@
 import { Logger, ConflictException, Injectable } from '@nestjs/common';
 import prisma from 'client';
 import { Plant } from '@prisma/client';
-import {
-  CreatePlantModel,
-  CreatePlantResponse,
-  GetAllPlants,
-} from './plant.dto';
+import { CreatePlantModel, GetAllPlants } from './plant.dto';
 import { generateImage } from 'utils/geminiCall';
 
 export interface GeminiResponse {
@@ -16,7 +12,7 @@ export interface GeminiResponse {
   genus: string;
   species: string;
   description: string;
-  disease: string;
+  disease: boolean;
   rarity: string;
 }
 
@@ -25,11 +21,20 @@ export class PlantService {
   async addPlant(
     ctx: any,
     plantData: CreatePlantModel,
-  ): Promise<CreatePlantResponse> {
-    const res: GeminiResponse = await generateImage(plantData.image);
+  ): Promise<Omit<Plant, 'image'>> {
+    let res: GeminiResponse = await generateImage(plantData.image);
+
+    // @ts-ignore
+    if (res.isleaf === 'true' || res.isleaf === true) {
+      res.isleaf = true;
+    } else {
+      res.isleaf = false;
+    }
+    Logger.debug(JSON.stringify(res));
     try {
       const plantDb: Plant = await prisma.plant.create({
-      data: {
+        // @ts-ignore
+        data: {
           userId: ctx.__user.id,
           ...{
             commonname: 'string',
@@ -46,7 +51,8 @@ export class PlantService {
           ...res,
         },
       });
-      return { name: res.commonname };
+      plantDb.image = undefined;
+      return plantDb;
     } catch (error) {
       Logger.error(error);
       throw new ConflictException('Plant not added !');

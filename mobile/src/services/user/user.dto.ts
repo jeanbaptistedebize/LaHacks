@@ -17,25 +17,44 @@ export interface UserCourse {
 }
 
 export interface AddPlantRequest {
-  type: "FLOWER";
-  name: string;
   coord: number[];
   image: string;
-}
-
-export interface AddPlantResponce {
-  name: string;
 }
 
 export class PlantModel {
   id: string;
-  type: string;
-  name: string;
+
   coord: number[];
-  image: string;
   createdAt: Date;
+
+  commonname: string;
+  scientificname: string;
+  rarity: string;
 }
 
 export interface GetAllPlant {
-  plants: PlantModel[]
+  plants: PlantModel[];
 }
+
+export interface PlantAll {
+  id: string;
+  commonname: string;
+  scientificname: string;
+  isleaf: boolean;
+  family: string;
+  genus: string;
+  species: string;
+  description: string;
+  disease: string;
+  rarity: string;
+  coord: number[];
+  createdAt: Date;
+  userId: string;
+  image: string;
+}
+
+export interface GetOwnedPlant {
+  plants: PlantAll[];
+}
+
+export interface AddPlantResponce extends Omit<PlantAll, "image"> {}

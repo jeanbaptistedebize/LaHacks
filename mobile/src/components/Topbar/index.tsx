@@ -16,7 +16,6 @@ import { Box, View } from "native-base";
 import { Image, Text, ImageBackground } from "react-native";
 import { useNavigate } from "react-router-native";
 import CustomIconButton from "../CustomIconButton/CustomIconButton";
-import { useLoginMutation } from "../../services/auth/auth";
 
 interface TopBarProps {
   isCameraPage?: boolean;
@@ -48,7 +47,6 @@ function TopBar({ isCameraPage, onCameraClick }: TopBarProps) {
           width: "100%",
           height: "110%",
         }}
-        resizeMode="fit"
         source={NAVBAR}
       />
       <View

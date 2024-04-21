@@ -6,10 +6,11 @@ import {
   ApiForbiddenResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreatePlantModel, CreatePlantResponse } from './plant.dto';
+import { CreatePlantModel } from './plant.dto';
 import { PlantService } from './plant.service';
 import { OllContext } from 'context/context.decorator';
 import { LoggedMiddleware } from 'middleware/middleware.decorator';
+import { Plant } from '@prisma/client';
 
 @ApiBadRequestResponse({ description: 'Parameters are not valid' })
 @ApiTags('Plant')
@@ -27,8 +28,6 @@ export class PlantController {
     examples: {
       template: {
         value: {
-          type: 'FLOWER',
-          name: 'ROSE',
           coord: [0, 0],
           image: 'Stringb64',
         } as CreatePlantModel,
@@ -37,7 +36,7 @@ export class PlantController {
   })
   @LoggedMiddleware(true)
   @Post('/')
-  async addPlant(@OllContext() ctx: any, @Body() body: CreatePlantModel): Promise<CreatePlantResponse> {
+  async addPlant(@OllContext() ctx: any, @Body() body: CreatePlantModel): Promise<Omit<Plant, 'image'>> {
     return this.plantService.addPlant(ctx, body);
   }
 

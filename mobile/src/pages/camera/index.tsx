@@ -72,13 +72,11 @@ export default function CameraPage() {
       setPlantNameIsLoading(true);
       if (!location) throw new Error("here");
       const t = await addPlant({
-        type: "FLOWER",
-        name: "ROSE",
         coord: [location.coords.latitude, location.coords.longitude],
         image: imageb64,
       }).unwrap();
       setPlantNameIsLoading(false);
-      setPlantName(t.name);
+      setPlantName(t.commonname);
     } catch (error) {
       console.error(error);
     }
@@ -110,7 +108,7 @@ export default function CameraPage() {
           }}
         >
           {plantNameIsLoading && (
-            <View style={{ paddingTop: 100}}>
+            <View style={{ paddingTop: 100 }}>
               <ActivityIndicator size="large" color="#AB97F9" />
               <Text
                 style={{ ...styles.text, textAlign: "center", marginTop: 20 }}
