@@ -41,5 +41,5 @@ export class CreatePlantResponse {
 
 export class GetAllPlants {
   @ApiProperty()
-  plants: PlantModel[];
+  plants: Omit<PlantModel, 'image'>[];
 }

@@ -1,12 +1,12 @@
 import { Camera, CameraType } from "expo-camera";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { useAddPlantMutation } from "../../services/user/user";
 import TopBar from "../../components/Topbar";
@@ -14,6 +14,7 @@ import TopBar from "../../components/Topbar";
 //@ts-ignore
 import mapPinBig from "../../../assets/gifs/firework.gif";
 import BottomDrawerMenu from "../../components/plantDescription";
+import * as Location from "expo-location";
 
 export default function CameraPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,6 +24,21 @@ export default function CameraPage() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [cameraRef, setCameraRef] = useState(null);
   const [addPlant] = useAddPlantMutation();
+  const [location, setLocation] = useState<Location.LocationObject>({
+    // @ts-ignore
+    coords: {
+      latitude: 34.070467452049336,
+      longitude: -118.44688096398609,
+    },
+  });
+  const [imageb64, setImageb64] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -45,7 +61,6 @@ export default function CameraPage() {
   }
 
   function toggleCameraType() {
-    console.log("here");
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
@@ -55,11 +70,11 @@ export default function CameraPage() {
     try {
       setPlantName(null);
       setPlantNameIsLoading(true);
-
+      if (!location) throw new Error("here");
       const t = await addPlant({
         type: "FLOWER",
         name: "ROSE",
-        coord: [0, 0],
+        coord: [location.coords.latitude, location.coords.longitude],
         image: imageb64,
       }).unwrap();
       setPlantNameIsLoading(false);
@@ -72,7 +87,9 @@ export default function CameraPage() {
   const takePicture = async () => {
     if (cameraRef) {
       const photo = await cameraRef.takePictureAsync({ base64: true });
+      setImageb64(photo.base64);
       await getPlant(photo.base64);
+      toggleMenu();
     }
   };
 
@@ -89,20 +106,39 @@ export default function CameraPage() {
             flexDirection: "column",
             alignContent: "center",
             justifyContent: "center",
-            marginTop: 150,
+            marginTop: 64,
           }}
         >
-          <Text style={{ ...styles.text, alignSelf: "center", marginTop: 20 }}>
-            {plantNameIsLoading ? "Is loading..." : plantName}
-          </Text>
-          {plantName && (
-            <Image
-              source={mapPinBig}
-              style={{ width: 100, height: 100, alignSelf: "center" }}
-            />
+          {plantNameIsLoading && (
+            <View style={{ paddingTop: 100}}>
+              <ActivityIndicator size="large" color="#AB97F9" />
+              <Text
+                style={{ ...styles.text, textAlign: "center", marginTop: 20 }}
+              >
+                We are curently procesing your image!!
+              </Text>
+            </View>
+          )}
+          {isMenuOpen && (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Image
+                source={mapPinBig}
+                style={{ width: 100, height: 100, alignSelf: "center" }}
+              />
+              <Image
+                source={mapPinBig}
+                style={{ width: 100, height: 100, alignSelf: "center" }}
+              />
+            </View>
           )}
         </View>
-        {!isMenuOpen && (
+        {/* {!isMenuOpen && (
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Text style={styles.text}>Flip Camera</Text>
@@ -111,14 +147,14 @@ export default function CameraPage() {
               <Text style={styles.text}>Take Picure</Text>
             </TouchableOpacity>
           </View>
-        )}
+        )} */}
         {isMenuOpen && (
           <BottomDrawerMenu
             isOpen={isMenuOpen}
             onClose={toggleMenu}
             plant={{
-              name: "Flower Name",
-              image: "",
+              name: plantName,
+              image: imageb64,
               rarity: "common",
               description:
                 "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
@@ -126,7 +162,7 @@ export default function CameraPage() {
           />
         )}
       </Camera>
-      <TopBar />
+      <TopBar isCameraPage onCameraClick={takePicture} />
     </View>
   );
 }

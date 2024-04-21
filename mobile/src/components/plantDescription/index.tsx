@@ -14,7 +14,7 @@ import { ScrollView } from "native-base";
 
 interface Plant {
   name: string;
-  image: string;
+  image?: string;
   description: string;
   rarity: string;
 }
@@ -72,7 +72,7 @@ const BottomDrawerMenu = ({
         <View style={styles.container}>
           <Image
             resizeMode="cover"
-            source={flower}
+            source={plant.image ? { uri: `data:image/png;base64,${plant.image}` } : flower}
             style={{
               width: 140,
               height: 140,

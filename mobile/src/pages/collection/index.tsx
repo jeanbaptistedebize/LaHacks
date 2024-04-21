@@ -53,7 +53,6 @@ export default function Collection() {
               <Image source={{
                 uri: 'https://reactnative.dev/img/tiny_logo.png',
               }} />
-              
             </View>)
           }
         </View>

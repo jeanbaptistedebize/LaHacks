@@ -16,13 +16,14 @@ export const userApi = api.injectEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ['Plant']
     }),
     getAllPlant: build.query<GetAllPlant, void>({
       query: () => ({
         url: "/plant/all",
         method: "GET",
       }),
-      providesTags: ["User"],
+      providesTags: ["Plant"],
     }),
   }),
 });
