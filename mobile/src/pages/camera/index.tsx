@@ -19,7 +19,7 @@ import * as Location from "expo-location";
 export default function CameraPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [type, setType] = useState(CameraType.back);
-  const [plantName, setPlantName] = useState(null);
+  const [plantSelected, setPlantSelected] = useState(null);
   const [plantNameIsLoading, setPlantNameIsLoading] = useState(false);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [cameraRef, setCameraRef] = useState(null);
@@ -31,7 +31,6 @@ export default function CameraPage() {
       longitude: -118.44688096398609,
     },
   });
-  const [imageb64, setImageb64] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -68,15 +67,16 @@ export default function CameraPage() {
 
   const getPlant = async (imageb64: string) => {
     try {
-      setPlantName(null);
+      setPlantSelected(null);
       setPlantNameIsLoading(true);
       if (!location) throw new Error("here");
       const t = await addPlant({
         coord: [location.coords.latitude, location.coords.longitude],
         image: imageb64,
       }).unwrap();
+
       setPlantNameIsLoading(false);
-      setPlantName(t.commonname);
+      setPlantSelected({ ...t, image: imageb64 });
     } catch (error) {
       console.error(error);
     }
@@ -85,7 +85,6 @@ export default function CameraPage() {
   const takePicture = async () => {
     if (cameraRef) {
       const photo = await cameraRef.takePictureAsync({ base64: true });
-      setImageb64(photo.base64);
       await getPlant(photo.base64);
       toggleMenu();
     }
@@ -97,6 +96,7 @@ export default function CameraPage() {
         style={styles.camera}
         type={type}
         ref={(ref) => setCameraRef(ref)}
+        autoFocus
       >
         <View
           style={{
@@ -151,13 +151,7 @@ export default function CameraPage() {
             isOpen={isMenuOpen}
             onClose={toggleMenu}
             delay={300}
-            plant={{
-              name: plantName,
-              image: imageb64,
-              rarity: "common",
-              description:
-                "Their stems are usually prickly and their glossy, green leaves have toothed edges. Rose flowers vary in size and shape. They burst with colors ranging from pastel pink, peach, and cream,",
-            }}
+            plant={plantSelected}
           />
         )}
       </Camera>
