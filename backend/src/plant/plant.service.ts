@@ -33,7 +33,16 @@ export class PlantService {
 
   async getAllplants() {
     try {
-      const plants: Plant[] = await prisma.plant.findMany();
+      const plants = await prisma.plant.findMany({
+        select: {
+          id: true,
+          type: true,
+          name: true,
+          coord: true,
+          createdAt: true,
+          userId: true,
+        },
+      });
 
       return {
         plants,
