@@ -4,13 +4,16 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   ImageBackground,
+  TextInput,
 } from "react-native";
 import TopBar from "../../components/Topbar";
 import { ScrollView, Box } from "native-base";
-import BottomDrawerMenu, { RARITY_MAP } from "../../components/plantDescription";
+import BottomDrawerMenu, {
+  RARITY_MAP,
+} from "../../components/plantDescription";
 // @ts-ignore
 import FLORAMAP from "../../../assets/floramap.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlantAll } from "../../services/user/user.dto";
 import { useGetOwnedPlantQuery } from "../../services/user/user";
 
@@ -37,6 +40,25 @@ export default function Collection() {
   const { data } = useGetOwnedPlantQuery();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [flowerSelected, setFlower] = useState<PlantAll | null>(null);
+  const [query, setQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(data?.plants);
+
+  useEffect(() => {
+    if (data) {
+      setFilteredData(data.plants);
+      setQuery("");
+    }
+  }, [data]);
+
+  const handleSearch = (text) => {
+    if (data) {
+      const filtered = data.plants.filter((item) =>
+        item.commonname.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+    setQuery(text);
+  };
 
   const toggleMenu = () => {
     if (!isMenuOpen) setFlower(null);
@@ -104,44 +126,67 @@ export default function Collection() {
             fontWeight: "700",
             textAlign: "right",
           }}
-        >
-        </Text>
+        ></Text>
         <View style={{}}>
-        <ScrollView style={{position: 'absolute', height: 900}}>
-          <View style={{
-            borderTopRightRadius: 30,
-            borderTopLeftRadius: 30,
-            backgroundColor: '#EBFFD7',
-            flex: 1,
-            marginTop: 0,
-            padding: 30,
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap'
-          }}>
-            <View style={{
-              width: 314,
-              height: 36,
-              marginTop: -10,
-              marginBottom: 5,
-              display: 'flex',
-              flexDirection: 'row',
-            }}>
-              <View style={{display: 'flex', flex: 1, flexDirection: 'row', backgroundColor: '#FFFFFF00', alignItems: 'center'}}>
-                <ImageBackground
-                  source={{
-                    uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603",
-                  }}
+          <ScrollView style={{ position: "absolute", height: 900 }}>
+            <View
+              style={{
+                borderTopRightRadius: 30,
+                borderTopLeftRadius: 30,
+                backgroundColor: "#EBFFD7",
+                flex: 1,
+                marginTop: 0,
+                padding: 30,
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <View
+                style={{
+                  width: 314,
+                  height: 36,
+                  marginTop: -10,
+                  marginBottom: 5,
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <View
                   style={{
-                    height: 20,
-                    width: 20,
-                    marginLeft: 10
+                    display: "flex",
+                    flex: 1,
+                    flexDirection: "row",
+                    backgroundColor: "#FFFFFF00",
+                    alignItems: "center",
                   }}
-                />
-                <Text style={{ marginLeft: 12, padding: 10, paddingLeft: 0 }}>
-                  Search
-                </Text>
-              </View>
+                >
+                  <ImageBackground
+                    source={{
+                      uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603",
+                    }}
+                    style={{
+                      height: 20,
+                      width: 20,
+                      marginLeft: 10,
+                      marginRight: 12,
+                    }}
+                  />
+
+                  <TextInput
+                    style={{
+                      height: 40,
+                      borderColor: "transparent",
+                      borderBottomColor: "grey",
+                      borderWidth: 1,
+                      marginBottom: 10,
+                      paddingHorizontal: 10,
+                    }}
+                    placeholder="Search..."
+                    value={query}
+                    onChangeText={handleSearch}
+                  />
+                </View>
                 <View
                   style={{
                     display: "flex",
@@ -168,10 +213,10 @@ export default function Collection() {
                   <Text style={{ marginRight: 5 }}>SORT BY</Text>
                 </View>
               </View>
-              {!data ? (
+              {!filteredData ? (
                 <ActivityIndicator />
               ) : (
-                data.plants.map((item) => (
+                filteredData.map((item) => (
                   <CustomIconButton
                     onPress={() => {
                       selectFlower(item);
@@ -199,7 +244,6 @@ export default function Collection() {
                           uri: `data:image/png;base64,${item.image}`,
                         }}
                       />
-
                     </View>
                   </CustomIconButton>
                 ))
