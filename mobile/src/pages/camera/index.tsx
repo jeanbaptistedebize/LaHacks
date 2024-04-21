@@ -89,7 +89,7 @@ export default function CameraPage() {
             flexDirection: "column",
             alignContent: "center",
             justifyContent: "center",
-            marginTop: 200,
+            marginTop: 150,
           }}
         >
           <Text style={{ ...styles.text, alignSelf: "center", marginTop: 20 }}>
@@ -102,14 +102,16 @@ export default function CameraPage() {
             />
           )}
         </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={toggleMenu}>
-            <Text style={styles.text}>Take Picure</Text>
-          </TouchableOpacity>
-        </View>
+        {!isMenuOpen && (
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+              <Text style={styles.text}>Flip Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={toggleMenu}>
+              <Text style={styles.text}>Take Picure</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         {isMenuOpen && (
           <BottomDrawerMenu
             isOpen={isMenuOpen}
@@ -140,8 +142,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     flexDirection: "row",
-    backgroundColor: "transparent",
-    margin: 64,
+    marginBottom: 200,
   },
   button: {
     flex: 1,
