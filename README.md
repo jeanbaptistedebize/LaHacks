@@ -1,6 +1,6 @@
 # FloraQuest
 
-![icon](https://github.com/jeanbaptistedebize/LaHacks/icon.png)
+![icon](https://github.com/jeanbaptistedebize/LaHacks/blob/main/icon.png)
 
 ### Collect, Learn, Help the Environment
 
