@@ -17,6 +17,7 @@
     "prisma:migrate": "yarn prisma migrate dev"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.7.1",
     "@nestjs/common": "^9.4.0",
     "@nestjs/core": "^9.4.0",
     "@nestjs/platform-express": "^9.4.0",

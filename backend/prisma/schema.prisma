@@ -29,7 +29,7 @@ model Plant {
   type      PLANT_TYPES
   name      String
   image     String
-  coord     Int[]
+  coord     Float[]
   createdAt DateTime    @default(now())
   userId    String      @db.Uuid
 
