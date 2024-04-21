@@ -23,13 +23,13 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
   const mapRef = useRef();
   const res = useGetAllPlantQuery();
 
-  useEffect(() => {
-    if (mapRef.current) {
-      // list of _id's must same that has been provided to the identifier props of the Marker
-      // @ts-ignore
-      mapRef.current.fitToSuppliedMarkers(markers.map(({ _id }) => _id));
-    }
-  }, [markers]);
+  // useEffect(() => {
+  //   if (mapRef.current) {
+  //     // list of _id's must same that has been provided to the identifier props of the Marker
+  //     // @ts-ignore
+  //     mapRef.current.fitToSuppliedMarkers(markers.map(({ _id }) => _id));
+  //   }
+  // }, [markers]);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -63,7 +63,7 @@ const MapMarkerAutoZoom = ({ markers }: MapProps) => {
       initialRegion={region}
       region={region}
       onRegionChange={handleRegionChange}
-      // showsUserLocation
+      showsUserLocation
     >
       {markers.map((marker) => (
         <Marker

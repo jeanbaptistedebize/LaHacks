@@ -49,12 +49,12 @@ export default function Home() {
     );
 
   const userCoords = [
-    {
-      _id: "1",
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      name: "try",
-    },
+    // {
+    //   _id: "1",
+    //   latitude: location.coords.latitude,
+    //   longitude: location.coords.longitude,
+    //   name: "try",
+    // },
   ];
   return (
     <View style={styles.container}>
