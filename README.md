@@ -7,14 +7,14 @@
 ## Inspiration
 We interact with plants everyday -- breathe in their oxygen, eat their fruits, and enjoy their presence. 
 
-But we rarely take the time to learn about their origins, attributes, and uses. With FloraQuest, you can collect plants virtually and learn at the same time! 
+But we rarely take the time to learn about their origins, attributes, and uses! With FloraQuest, you can collect plants virtually and learn at the same time.
 
 Open the camera to scan a plant or one of its leaves, and AI agents will tell you its uses, regions, if it has a disease, and some fun facts.
 The newly discovered plant will be added to your collection and logged on the public map for all to see and learn about. You can open this map to browse all discovered plants, and then you can go collect them!
 If you are the first to catalog a new plant, you get extra points!
 
 ## Overview
-FloraQuest is a pokemon go inspired app to virtually collect plants. By cataloging a robust map of plant locations, diseases, and densities, users are supporting environmental efforts.
+By cataloging a robust map of plant locations, diseases, and densities, users are supporting environmental efforts.
 In addition, FloraQuest helps you to be aware of and learn about your environment.
 
 <p align="center">
