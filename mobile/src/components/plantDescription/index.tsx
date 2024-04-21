@@ -3,15 +3,18 @@ import {
   View,
   StyleSheet,
   Animated,
-  TouchableOpacity,
   Text,
   Image,
 } from "react-native";
 
-//@ts-ignore
-import flower from "../../../assets/flower.png";
 import { ScrollView } from "native-base";
 import { PlantAll } from "../../services/user/user.dto";
+
+export const RARITY_MAP = {
+  common: "#FF8A8A",
+  uncommon: "#FFD45F",
+  rare: "#788BFF",
+} as const;
 
 interface BottomDrawerMenuProps {
   isOpen: boolean;
@@ -68,7 +71,12 @@ const BottomDrawerMenu = ({
         }}
       >
         <View style={{ height: 70 }} />
-        <View style={styles.container}>
+        <View
+          style={[
+            styles.container,
+            { borderColor: plant ? RARITY_MAP[plant.rarity] : "transparent" },
+          ]}
+        >
           {plant && (
             <Image
               resizeMode="cover"
@@ -80,12 +88,14 @@ const BottomDrawerMenu = ({
                 position: "absolute",
                 top: "-10%",
                 borderRadius: 90,
+                borderColor: "#474343",
+                borderWidth: 4,
               }}
             />
           )}
           {plant && (
             <View style={{ gap: 16, marginTop: 70 }}>
-              <Text style={styles.title}>
+              <Text style={[styles.title]}>
                 {plant.commonname} ({plant.scientificname})
               </Text>
               <Text style={styles.description}>{plant.description}</Text>
@@ -105,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     textAlign: "center",
     fontFamily: "Itim_400Regular",
   },
@@ -124,9 +134,12 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: "#FFFDED",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
     padding: 10,
+    borderWidth: 6,
+    width: "105%",
+    alignSelf: "center",
   },
   handle: {
     width: 40,

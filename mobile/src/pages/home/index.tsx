@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { StyleSheet, View, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  ImageBackground,
+} from "react-native";
 import * as Location from "expo-location";
 import MapMarkerAutoZoom from "./zoom";
 import TopBar from "../../components/Topbar";
+// @ts-ignore
+import FLORAMAP from "../../../assets/floramap.png";
 
 export default function Home() {
   const [location, setLocation] = useState<Location.LocationObject>({
@@ -52,6 +59,22 @@ export default function Home() {
   ];
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          width: 200,
+          height: 100,
+          zIndex: 5,
+          padding: 20,
+        }}
+      >
+        <ImageBackground
+          resizeMode="contain"
+          source={FLORAMAP}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </View>
       <MapMarkerAutoZoom markers={userCoords} />
       <TopBar />
     </View>
