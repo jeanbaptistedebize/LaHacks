@@ -116,8 +116,8 @@ export default function Collection() {
         <View style={{}}>
         <ScrollView style={{position: 'absolute', height: 900}}>
           <View style={{
-            borderTopRightRadius: 20,
-            borderTopLeftRadius: 20,
+            borderTopRightRadius: 30,
+            borderTopLeftRadius: 30,
             backgroundColor: '#EAFFEA',
             flex: 1,
             marginTop: 0,
@@ -132,18 +132,18 @@ export default function Collection() {
               marginTop: -10,
               marginBottom: 5,
               display: 'flex',
-              flexDirection: 'row'
+              flexDirection: 'row',
             }}>
               <View style={{display: 'flex', flex: 1, flexDirection: 'row', backgroundColor: '#FFFFFF00', alignItems: 'center'}}>
-              <ImageBackground source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603'}}
-                  style={{
-                    display: "flex",
-                    flex: 1,
-                    flexDirection: "row",
-                    backgroundColor: "#FFFFFF00",
-                    alignItems: "center",
-                  }}
-                />
+                  <ImageBackground source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603'}}
+                    style={{
+                      display: "flex",
+                      flex: 1,
+                      flexDirection: "row",
+                      backgroundColor: "#FFFFFF00",
+                      alignItems: "center",
+                    }}
+                  />
                   <ImageBackground
                     source={{
                       uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/735px-Magnifying_glass_icon.svg.png?20130526065603",
@@ -193,13 +193,13 @@ export default function Collection() {
                   >
                     <View
                       style={{
-                        height: 120,
+                        height: 117,
                         width: 117,
                         backgroundColor: "#237744",
                         borderWidth: 4,
                         borderRadius: 15,
                         borderColor: RARITY_MAP[item.rarity] ?? "#237744",
-                        margin: 10,
+                        margin: 20,
                         shadowColor: "black",
                         shadowOpacity: 0.7,
                         shadowRadius: 4,
@@ -213,6 +213,14 @@ export default function Collection() {
                           uri: `data:image/png;base64,${item.image}`,
                         }}
                       />
+                      <View style={{
+                        position: 'absolute',
+                        backgroundColor: 'rgba(0,0,0,0.2)',
+                        width: '100%',
+                        height: 5,
+                        bottom: 0,
+                        transform: 'translateY(28px)',
+                        borderRadius: 20}}/>
                     </View>
                   </CustomIconButton>
                 ))
